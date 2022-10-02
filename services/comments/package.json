@@ -10,8 +10,8 @@
   "version": "1.0.0",
   "main": "services/index.js",
   "scripts": {
-    "start:dev": "nodemon services/comment.js",
-    "start": "node services/comment.js"
+    "start:dev": "nodemon comment.js",
+    "start": "node comment.js"
   },
   "repository": {
     "type": "git",
