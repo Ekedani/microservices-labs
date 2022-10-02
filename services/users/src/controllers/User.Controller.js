@@ -38,7 +38,7 @@ const UserController = {
                 username: req.body.username,
                 tag: req.body.tag
             });
-            const result = User.save(user);
+            const result = await User.save(user);
             res.send(result);
         } catch (err) {
             next(err);
