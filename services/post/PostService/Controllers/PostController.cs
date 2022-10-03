@@ -24,6 +24,13 @@ namespace PostService.Controllers
             return Posts.ToArray();
         }
 
+        [HttpGet]
+        [Route("Get/{id}")]
+        public Post Get(int id)
+        {
+            return Posts.ToArray().First(x=>x.Id == id);
+        }
+
 
 
         [HttpPost]
