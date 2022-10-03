@@ -24,6 +24,8 @@ namespace PostService.Controllers
             return Posts.ToArray();
         }
 
+
+
         [HttpPost]
         [Route("Add")]
         public async Task<ActionResult<Post>> Add(Post post)
