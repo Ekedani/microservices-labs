@@ -1,4 +1,7 @@
 .env
 .idea
+.vs
+bin
+obj
 node_modules
 services/users/data.json
