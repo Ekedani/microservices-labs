@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/users', userRoutes);
+app.use('api/users', userRoutes);
 
 // Custom 404 handler
 app.use((req, res, next) => {
