@@ -1,0 +1,15 @@
+@import '../../index.scss';
+
+.container {
+  width: 80vw;
+  background-color: $back-color;
+  display: flex;
+  flex-direction: row;
+}
+
+.h6 {
+  color: $accent-color;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
