@@ -3,8 +3,8 @@ import createError from 'http-errors';
 
 const NOT_FOUND_MSG = 'User not found';
 
-const UserController = {
-    async getAllUsers(req, res, next) {
+const CommentController = {
+    async getAllComments(req, res, next) {
         try {
             const { postID } = req.params;
             const result = await Comment.getAll(postID);
@@ -14,7 +14,7 @@ const UserController = {
         }
     },
 
-    async findUserById(req, res, next) {
+    async findCommentById(req, res, next) {
         try {
             const { id } = req.params;
             const result = await User.findById(id);

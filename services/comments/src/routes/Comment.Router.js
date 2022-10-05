@@ -2,8 +2,9 @@ import { Router } from 'express';
 import CommentController from "../controllers/Comment.Controller.js";
 const router = Router();
 
-router.get('/post/:id/comments', CommentController.getAllUsers);
-router.post('/post/:id/', CommentController.findUserById);
-router.delete('/post/:id/comments/:id', CommentController.deleteUserById);
+router.get('/posts/:id/comments', CommentController.getAllComments);
+router.post('/posts/:id/', CommentController.findCommentById);
+router.post('/posts/:id/new-comment', CommentController.addComment);
+router.delete('/posts/:id/comments/:id', CommentController.deleteCommentById);
 
 export default router;
