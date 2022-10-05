@@ -13,7 +13,8 @@ spec:
        app: users
     spec:
       containers:
-        - image: users:1.0   
-          imagePullPolicy: Never
+        - image: users:1.0  
+          imagePullPolicy: Never 
           name: users 
-            - containerPort: 8080
+          ports:
+            - containerPort: 8080 
