@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: comments-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/posts/(.*)/comments
+            pathType: "Prefix"
+            backend:
+              service:
+                name: comments-service
+                port:
+                  number: 80
