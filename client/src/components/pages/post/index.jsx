@@ -8,20 +8,30 @@ export const Post = () => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {async function fetchData(){
-    let resnonse = await axios.get(`/api/posts/${id}/comments`);
+    const resnonse = await axios.get(`/api/posts/${id}/comments`);
     setPost(resnonse);
-    resnonse = await axios.get(`/api/posts/${id}/comments`)
+  }});
+  useEffect(() => {async function fetchData(){
+    const resnonse = await axios.get(`/api/posts/${id}/comments`)
     setComments(resnonse);
+  }}, [comments]);
+  const addComment = async () => {
+    const body = prompt('What you wanna say?');
+    await axios.post(`/api/posts/${id}/comments`, {
+      body,
+    })
   }
-  });  
   return (
       <div className={styles.container}>
         <h1>{post.header} by {post.author}</h1>
         <hr />
         <p>{post.body}</p>
         <hr />
+        <div className={styles.center} >
+          <button onClick={addComment}>Add comment</button>
+        </div>
         {post.comments.map(comment => 
-          <Comment author={comment.author} body={comment.body} />)}
+          <Comment author={comment.author} body={comment.body} postID={id} />)}
       </div>
     )
 }
