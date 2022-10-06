@@ -5,6 +5,11 @@ h1 {
   color: $accent-color;
 }
 
+h3 {
+  @extend h1;
+  font-size: $small-text;
+}
+
 .container {
   width: 100vw;
   height: 100vh;
@@ -32,4 +37,29 @@ h1 {
 
 hr {
   border: 1px solid $lighter-color;
+}
+
+.newPost {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  * {
+    margin-right: 10px;
+    :nth-last-child {
+      margin-right: 0px;
+    }
+  }
+}
+
+button {
+  user-select: none;
+  background-color: $back-color;
+  border: 1px solid $accent-color;
+  color: $accent-color;
+  border-radius: 2px;
+  font-size: $small-text;
+  :hover {
+    background-color: $ultra-light-color;
+  }
 }

@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import styles from './homepage.module.scss';
 import { PostModal } from '../../common/post-modal';
+import { NewPostModal } from '../../common/new-post-modal';
 export const HomePage = (postID, authorID) => {
+  const [newPostInput, setNewPostInput] = useState(false);
   let posts = [
     {
       header: 'Header 1',
@@ -25,11 +28,31 @@ export const HomePage = (postID, authorID) => {
   });
   const clicked = () => {
     //TODO redirect
-    console.log('123');
+  }
+  const buttonClicked = () => {
+    setNewPostInput(true);
+  }
+  const discardOnClick = () => {
+    setNewPostInput(false);
+  }
+  const submitNewPost = async (caption, content) => {
+    const req = await JSON.stringify({
+      caption,
+      content,
+    });
+    await axios.post('/api/posts', req);
   }
   return (
       <div className={styles.container}>
+        {newPostInput ?
+          <NewPostModal
+            positiveOnClick={submitNewPost}
+            negativeOnClick={discardOnClick} /> : null } 
         <h1>Latest posts</h1>
+        <div className={styles.newPost}>
+          <h3>Have something on mind?</h3>
+          <button onClick={buttonClicked}>Create</button>
+        </div>
         <hr />
         {
           posts.length > 0 ?
