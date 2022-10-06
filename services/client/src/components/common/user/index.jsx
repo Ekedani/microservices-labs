@@ -1,13 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useParams } from 'react'
 import styles from './user.module.scss';
 import { PostModal } from '../post-modal';
-export const User = (userID) => {
+export const User = () => {
+  const { id } = useParams();
   let user = {
     role: 'user',
     email: 'user123@gmail.com',
     username: 'username',
     tag: 'userprikolist123',
-    posts: ['Header 1', 'Header 2', 'Header 3', 'Header 4'],
+    posts: [
+      {
+        header: 'Header 1',
+        body: 'Some text for blog 1',
+      },
+      {
+        header: 'Header 2',
+        body: 'Some text for blog 2',
+      },
+      {
+        header: 'Header 3',
+        body: 'Some text for blog 3',
+      }
+    ],
   };
   const clicked = () => {
     //TODO redirect
@@ -29,7 +43,7 @@ export const User = (userID) => {
                 There are {user.posts.length} posts from {user.username}:
               </header>
               {user.posts.map((post, i) =>
-                <PostModal key={i} header={post} body={'body'} onClick={clicked} />)}
+                <PostModal key={i} header={post.header} body={post.body} onClick={clicked} />)}
             </div>
           )
           :
