@@ -21,9 +21,9 @@ export const PostModal = ({postID, authorID}) => {
   }, []);
   const onClick = () => {
     if (postID) {
-      return navigate(`/api/posts/${postID}`)
+      return navigate(`/api/posts/${postID}`);
     }
-    return navigate(`/oops`)
+    return navigate(`/oops`);
   }
   const numberOfWords = data.body.split(' ').length;
   const timeToRead = Math.ceil(numberOfWords / WORDS_PER_MINUTE);

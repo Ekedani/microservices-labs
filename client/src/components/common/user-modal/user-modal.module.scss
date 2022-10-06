@@ -23,7 +23,21 @@
     justify-content: center;
     color: $accent-color;
   }
-  
+  button {
+    color: $back-color;
+    cursor: pointer;
+    background-color: $lighter-color;
+    outline: none;
+    &:hover {
+      background-color: $accent-color;
+    }
+  }
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    padding-right: 10px;
+    margin-left: auto;
+  }
 }
 
 .avatar {
