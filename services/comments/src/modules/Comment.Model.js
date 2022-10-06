@@ -65,4 +65,4 @@ class Comment {
     }
 }
 
-export default User;
+export default Comment;
