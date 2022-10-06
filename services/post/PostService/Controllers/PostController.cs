@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PostService.Models;
+using System.Net;
 
 namespace PostService.Controllers
 {
     [Produces("application/json")]
     [ApiController]
-    [Route("api/v2/posts")]
+    [Route("api/posts")]
     public class PostController : ControllerBase
     {
         private List<Post> Posts = new List<Post>();
@@ -18,7 +19,6 @@ namespace PostService.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
         public IEnumerable<Post> Get()
         {
             return Posts.ToArray();
@@ -30,7 +30,6 @@ namespace PostService.Controllers
         {
             return Posts.ToArray().First(x=>x.Id == id);
         }
-
 
 
         [HttpPost]
@@ -57,6 +56,19 @@ namespace PostService.Controllers
                 return Ok();
             }
             return BadRequest();
+        }
+
+        public static string HttpGet(string uri)
+        {
+            string content = null;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader sr = new StreamReader(stream))
+            {
+                content = sr.ReadToEnd();
+            }
+            return content;
         }
     }
 }

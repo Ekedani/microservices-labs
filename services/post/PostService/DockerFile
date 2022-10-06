@@ -1,15 +1,20 @@
-﻿# Build Stage
-FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
-WORKDIR /sourse
-COPY . .
-RUN dotnet restore "./PostService/PostService.csproj" --disable-parallel
-RUN dotnet publish "./PostService/PostService.csproj" -c release -o /app --no-restore
-
-#Serve Stage
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-COPY --from=build /app ./
+EXPOSE 80
+EXPOSE 443
 
-EXPOSE 5000
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["PostService/PostService.csproj", "PostService/"]
+RUN dotnet restore "PostService/PostService.csproj"
+COPY . .
+WORKDIR "/src/PostService"
+RUN dotnet build "PostService.csproj" -c Release -o /app/build
 
+FROM build AS publish
+RUN dotnet publish "PostService.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "PostService.dll"]

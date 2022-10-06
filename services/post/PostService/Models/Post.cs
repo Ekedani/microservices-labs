@@ -6,5 +6,7 @@
         public string Header { get; set; } 
         public string Body { get; set; }
         public string Author_Id { get; set; }
+        public string Username { get; set; }
+        public string Tag { get; set; }
     }
 }
