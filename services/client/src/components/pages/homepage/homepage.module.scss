@@ -9,6 +9,8 @@ h1 {
   width: 100vw;
   height: 100vh;
   background-color: $back-color;
+  position: fixed;
+  top: 40px
 }
 
 .username {
