@@ -15,9 +15,9 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Navigate to="/feed" />} />
-        <Route path="/feed" element={<HomePage />} />
-        <Route path="/users" element={<UsersPage />} />
+        <Route path="/" element={<Navigate to="/api/posts" />} />
+        <Route path="/api/posts" element={<HomePage />} />
+        <Route path="/api/users" element={<UsersPage />} />
       </Routes>
     </Router>
   );

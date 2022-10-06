@@ -5,8 +5,8 @@ export const NavBar = (author, body) => {
   return (
       <div className={styles.container}>
         <h6>Best blog you`ve ever seen!</h6>
-        <a href='/users'>Users</a>
-        <a href='/feed'>Posts</a>
+        <a href='/api/users'>Users</a>
+        <a href='/api/posts'>Posts</a>
       </div>
     )
 }
