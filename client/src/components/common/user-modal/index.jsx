@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './user-modal.module.scss';
 
 export const UserModal = ({userID, username, tag}) => {
+  const navigate = useNavigate();
   const onClick = () => {
-    <Route path='/api/users/:id' element={ <Navigate to="/error-page" /> }/>
+    if (userID) {
+      return navigate(`/api/users/${userID}`)
+    }
+    return navigate(`/oops`)
   }
   return (
       <div className={styles.container} onClick={onClick}>

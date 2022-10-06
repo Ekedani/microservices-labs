@@ -1,0 +1,28 @@
+@import '../../index.scss';
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: $back-color;
+}
+
+.username {
+  text-align: center;
+  font-size: $large-text;
+  color: $accent-color;
+}
+
+.tag {
+  text-align: center;
+  font-size: $medium-text;
+  color: $accent-color;
+}
+
+.postsCount {
+  text-align: center;
+  color: $lighter-color;
+}
+
+hr {
+  border: 1px solid $lighter-color;
+}
