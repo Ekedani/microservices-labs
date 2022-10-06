@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-deployment
+  name: comments-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: comments
   template:
     metadata:
      labels:
-       app: users
+       app: comments
     spec:
       containers:
-        - image: users:0.1  
+        - image: comments:0.1  
           imagePullPolicy: Never 
-          name: users 
+          name: comments 
           ports:
-            - containerPort: 7141 
+            - containerPort: 3000 

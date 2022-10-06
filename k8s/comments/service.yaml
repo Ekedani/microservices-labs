@@ -6,6 +6,6 @@ spec:
   type: ClusterIP
   ports:
     - port: 80
-      targetPort: 7141
+      targetPort: 3000
   selector:
     app: comments
