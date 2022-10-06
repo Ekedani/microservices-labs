@@ -1,7 +1,7 @@
 import Comment from '../models/Comment.Model.js';
 import createError from 'http-errors';
+import {body, validationResult} from "express-validator";
 
-const NOT_FOUND_MSG = 'User not found';
 
 const CommentController = {
     async getAllComments(req, res, next) {
@@ -19,7 +19,7 @@ const CommentController = {
             const { id } = req.params;
             const result = await User.findById(id);
             if (!result) {
-                throw createError(404, NOT_FOUND_MSG);
+                throw createError(404, 'This comment doesn`t exist');
             }
             res.send(result);
         } catch (err) {
@@ -42,14 +42,22 @@ const CommentController = {
             const { commentID, postID } = req.params;
             const result = await Comment.deleteById(commentID, postID);
             if (!result) {
-                throw createError(404, NOT_FOUND_MSG);
+                throw createError(404, 'This comment doesn`t exist');
             }
             res.send(result);
         } catch (err) {
             next(err);
         }
     },
-
+    validate(method) {
+        switch (method) {
+            case 'Post': {
+                return [
+                    body('body', 'Comment body length must be more than 3 characters').isLength({min: 3}),
+                ];
+            }
+        }
+    }
 }
 
-export default UserController;
+export default CommentController;
