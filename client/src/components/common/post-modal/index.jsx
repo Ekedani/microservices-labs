@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styles from './post-modal.module.scss';
 
 export const PostModal = ({postID, authorID}) => {
@@ -25,6 +26,9 @@ export const PostModal = ({postID, authorID}) => {
     }
     return navigate(`/oops`);
   }
+  const deletePost = async (postID) => {
+    await axios.delete(`/api/v2/posts/delete/${postID}`);
+  }
   const numberOfWords = data.body.split(' ').length;
   const timeToRead = Math.ceil(numberOfWords / WORDS_PER_MINUTE);
   return (
@@ -35,10 +39,11 @@ export const PostModal = ({postID, authorID}) => {
             data.author ?
             <p>&nbsp;by&nbsp;<a href={'google.com'}>{data.author.username}</a></p>
             :
-            <></>
+            null
           }
         </div>
         <span>🕐 {timeToRead}min</span>
+        <button onClick={deletePost}>Delete</button>
       </div>
     )
 }
