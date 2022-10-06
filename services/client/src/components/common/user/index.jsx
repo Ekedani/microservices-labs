@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useParams } from 'react'
 import styles from './user.module.scss';
 import { PostModal } from '../post-modal';
-export const User = (userID) => {
+export const User = () => {
+  const { id } = useParams();
   let user = {
     role: 'user',
     email: 'user123@gmail.com',
