@@ -17,4 +17,4 @@ spec:
           imagePullPolicy: Never 
           name: posts 
           ports:
-            - containerPort: 3000 
+            - containerPort: 80 
