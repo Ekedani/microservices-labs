@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import styles from './comment.module.scss';
-import { Comment } from '../comment';
+import styles from './post.module.scss';
+import { Comment } from '../../common/comment';
 export const Post = (postID, authorID) => {
   let post = {
     header: 'Header',

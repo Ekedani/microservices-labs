@@ -1,6 +1,6 @@
 import React, { useEffect, useParams } from 'react'
 import styles from './user.module.scss';
-import { PostModal } from '../post-modal';
+import { PostModal } from '../../common/post-modal';
 export const User = () => {
   const { id } = useParams();
   let user = {
