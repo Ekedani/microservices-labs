@@ -3,6 +3,7 @@
 h1 {
   font-size: $medium-text;
   color: $accent-color;
+  text-align: center;
 }
 
 .container {
@@ -32,4 +33,17 @@ h1 {
 
 hr {
   border: 1px solid $lighter-color;
+}
+
+.newUser { 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  * {
+    margin-right: 10px;
+    :nth-last-child {
+      margin-right: 0px;
+    }
+  }
 }

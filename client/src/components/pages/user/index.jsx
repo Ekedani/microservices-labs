@@ -1,34 +1,39 @@
-import React, { useEffect, useParams } from 'react'
+import React, { useEffect, useParams, useState } from 'react'
+import axios from 'axios';
 import styles from './user.module.scss';
 import { PostModal } from '../../common/post-modal';
 export const User = () => {
   const { id } = useParams();
-  let user = {
-    role: 'user',
-    email: 'user123@gmail.com',
-    username: 'username',
-    tag: 'userprikolist123',
-    posts: [
-      {
-        header: 'Header 1',
-        body: 'Some text for blog 1',
-      },
-      {
-        header: 'Header 2',
-        body: 'Some text for blog 2',
-      },
-      {
-        header: 'Header 3',
-        body: 'Some text for blog 3',
-      }
-    ],
-  };
-  const clicked = () => {
+  const [user, setUser] = useState({});
+  // let user = {
+  //   role: 'user',
+  //   email: 'user123@gmail.com',
+  //   username: 'username',
+  //   tag: 'userprikolist123',
+  //   posts: [
+  //     {
+  //       header: 'Header 1',
+  //       body: 'Some text for blog 1',
+  //     },
+  //     {
+  //       header: 'Header 2',
+  //       body: 'Some text for blog 2',
+  //     },
+  //     {
+  //       header: 'Header 3',
+  //       body: 'Some text for blog 3',
+  //     }
+  //   ],
+  // };
+  const openPost = () => {
     //TODO redirect
     console.log('123');
   }
-  useEffect(() => {
-    // get from db
+  
+  useEffect(() => {async function fetchUser () {
+    const response = await axios.get(`api/users/${id}`);
+    setUser(response);
+  } 
   });  
   return (
       <div className={styles.container}>
@@ -43,7 +48,7 @@ export const User = () => {
                 There are {user.posts.length} posts from {user.username}:
               </header>
               {user.posts.map((post, i) =>
-                <PostModal key={i} header={post.header} body={post.body} onClick={clicked} />)}
+                <PostModal key={i} header={post.header} body={post.body} onClick={() => openPost(post.id)} />)}
             </div>
           )
           :
