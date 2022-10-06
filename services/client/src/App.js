@@ -1,8 +1,21 @@
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Navigate
+} from "react-router-dom";
+
 import './App.css';
-import {User} from './components/common/user';
+import {HomePage} from './components/pages/homepage';
 function App() {
   return (
-    <User></User>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/feed" />} />
+        <Route path="/feed" element={<HomePage />} />
+      </Routes>
+    </Router>
   );
 }
 
