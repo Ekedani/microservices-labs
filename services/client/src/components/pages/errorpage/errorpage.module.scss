@@ -1,0 +1,50 @@
+@import '../../index.scss';
+
+h1 {
+  font-size: $large-text;
+  color: $accent-color;
+}
+
+h2 {
+  font-size: $medium-text;
+  color: $accent-color;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: $back-color;
+  position: fixed;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.username {
+  text-align: center;
+  font-size: $large-text;
+  color: $accent-color;
+}
+
+.tag {
+  text-align: center;
+  font-size: $medium-text;
+  color: $accent-color;
+}
+
+.postsCount {
+  text-align: center;
+  color: $lighter-color;
+}
+
+hr {
+  width: 100%;
+  border: 1px solid $lighter-color;
+}
+
+span {
+  color: $accent-color;
+  font-size: $small-text;
+}
