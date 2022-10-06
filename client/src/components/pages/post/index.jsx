@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useParams, useState } from 'react';
+import axios from 'axios';
 import styles from './post.module.scss';
 import { Comment } from '../../common/comment';
-export const Post = (postID, authorID) => {
-  let post = {
-    header: 'Header',
-    body: 'body',
-    author: 'Author',
-    comments: ['Header 1', 'Header 2', 'Header 3', 'Header 4'],
-  };
+export const Post = () => {
+  const { id } = useParams();
+  const [post, setPost] = useState({});
+  const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    // get from db
+  useEffect(() => {async function fetchData(){
+    let resnonse = await axios.get(`/api/posts/${id}/comments`);
+    setPost(resnonse);
+    resnonse = await axios.get(`/api/posts/${id}/comments`)
+    setComments(resnonse);
+  }
   });  
   return (
       <div className={styles.container}>
