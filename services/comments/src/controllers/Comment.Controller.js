@@ -1,4 +1,4 @@
-import Comment from '../models/Comment.Model.js';
+import Comment from '../modules/Comment.Model.js';
 import createError from 'http-errors';
 import {body, validationResult} from "express-validator";
 
