@@ -1,4 +1,5 @@
-import React, { useEffect, useParams, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styles from './post.module.scss';
 import { Comment } from '../../common/comment';
