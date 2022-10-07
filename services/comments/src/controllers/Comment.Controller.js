@@ -1,6 +1,6 @@
 import Comment from '../modules/Comment.Model.js';
 import createError from 'http-errors';
-import {body, validationResult} from "express-validator";
+import { body, validationResult } from "express-validator";
 
 
 const CommentController = {
@@ -35,7 +35,12 @@ const CommentController = {
                     return createError(400, x.msg);
                 })
             }
-            const comment = new Comment(req.params)
+            const { postID } = req.params;
+            const comment = new Comment({
+                postID,
+                authorID: req.body.authorID, // Temp solution
+                text: req.body.text
+            })
             const result = await Comment.save(comment);
             res.send(result);
         } catch (err) {
@@ -59,7 +64,7 @@ const CommentController = {
         switch (method) {
             case 'Post': {
                 return [
-                    body('body', 'Comment body length must be more than 3 characters').isLength({min: 3}),
+                    body('text', 'Comment body length must be more than 3 characters').isLength({min: 3}),
                 ];
             }
         }

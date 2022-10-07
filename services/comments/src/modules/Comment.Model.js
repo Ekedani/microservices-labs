@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const dataPath = process.env.DATA_PATH ?? resolve(dirname(__filename), "../../data.json")
 
 class Comment {
-    constructor({ postID, authorID, text, createdAt} = {
+    constructor({ postID, authorID, text } = {
         postID: null,
         authorID: null,
         text: null,
@@ -18,18 +18,16 @@ class Comment {
         this.postID = postID;
         this.authorID = authorID;
         this.text = text;
-        this.createdAt = createdAt;
+        this.createdAt = Date.now();
     }
 
-    static async save(postID, comment) {
+    static async save(comment) {
         try {
             const data = await fs.readFile(dataPath, 'utf-8');
             const newData = JSON.parse(data);
-            newData.comments
-                .filter(elem => elem.postID === postID)[0].comments
-                .push(comment);
+            newData.comments.push(comment);
             await fs.writeFile(dataPath, JSON.stringify(newData), 'utf-8')
-            return newData.comments[newData.users.length - 1];
+            return newData.comments[newData.comments.length - 1];
         } catch (err) {
             createError(500, err.message)
         }
