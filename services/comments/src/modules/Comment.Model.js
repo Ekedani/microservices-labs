@@ -35,9 +35,9 @@ class Comment {
 
     static async getAll(postID) {
         try {
-            const result = await fs.readFile(dataPath, 'utf-8');
-            return JSON.parse(result)
-                .filter(elem => elem.postID === postID).comments;
+            const data = await fs.readFile(dataPath, 'utf-8');
+            const comments = JSON.parse(data).comments.filter(elem => elem.postID === postID);
+            return {comments};
         } catch (err) {
             createError(500, err.message)
         }
