@@ -1,4 +1,5 @@
-import React, { useEffect, useParams } from 'react'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import styles from './user.module.scss';
 import { PostModal } from '../post-modal';
 export const User = () => {
