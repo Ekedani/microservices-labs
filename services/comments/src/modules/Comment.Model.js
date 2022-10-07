@@ -47,9 +47,11 @@ class Comment {
         try {
             let data = await fs.readFile(dataPath, 'utf-8');
             data = await JSON.parse(data);
-            const commentIndex = data.comments
-                .filter(elem => elem.postID === postID)[0]
-                .comments.indexOf(elem => elem.commentID === commentID);
+            
+            const commentIndex = data.comments.filter(elem => elem.postID === postID)[0]
+            .comments.indexOf(elem => elem.commentID === commentID);
+
+            console.log(commentIndex)
             if(commentIndex === -1) {
                 return null;
             }
