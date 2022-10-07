@@ -40,7 +40,7 @@ export const HomePage = (postID, authorID) => {
       caption,
       content,
     });
-    await axios.post('/api/posts', req);
+    await axios.post('/posts', req);
   }
   return (
       <div className={styles.container}>
