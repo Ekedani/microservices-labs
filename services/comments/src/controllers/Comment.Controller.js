@@ -17,7 +17,7 @@ const CommentController = {
     async findCommentById(req, res, next) {
         try {
             const { id } = req.params;
-            const result = await User.findById(id);
+            const result = await Comment.findById(id);
             if (!result) {
                 throw createError(404, 'This comment doesn`t exist');
             }
