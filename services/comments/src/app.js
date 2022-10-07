@@ -4,6 +4,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/comments', commentRouter);
+app.use('/api/posts/:postID/comments', commentRouter);
 
 export default app;
