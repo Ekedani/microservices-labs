@@ -37,8 +37,8 @@ const CommentController = {
 
     async deleteCommentById(req, res, next) {
         try {
-            const { commentID, postID } = req.params;
-            const result = await Comment.deleteById(postID, commentID);
+            const { id, postID } = req.params;
+            const result = await Comment.deleteById(postID, id);
             if (!result) {
                 throw createError(404, 'This comment doesn`t exist');
             }

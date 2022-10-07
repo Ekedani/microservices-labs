@@ -48,14 +48,12 @@ class Comment {
             let data = await fs.readFile(dataPath, 'utf-8');
             data = await JSON.parse(data);
             
-            const commentIndex = data.comments.filter(elem => elem.postID === postID)[0]
-            .comments.indexOf(elem => elem.commentID === commentID);
-
-            console.log(commentIndex)
-            if(commentIndex === -1) {
+            const index = data.comments.map(x => x.id).indexOf(commentID);
+            if(index === -1) {
                 return null;
             }
-            const result = data.comments[commentIndex];
+
+            const result = data.comments[index];
             data.comments.splice(index, 1);
             await fs.writeFile(dataPath, JSON.stringify(data), 'utf-8')
             return result;
