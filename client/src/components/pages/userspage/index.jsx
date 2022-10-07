@@ -1,42 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './userspage.module.scss';
 import { UserModal } from '../../common/user-modal';
 export const UsersPage = () => {
   const navigate = useNavigate();
-  //const [users, setUsers] = useState([]);
-  let users = [
-    {
-      username: 'User 1',
-      tag: 'user1',
-    },
-    {
-      username: 'User 2',
-      tag: 'user2',
-    },
-    {
-      username: 'User 3',
-      tag: 'user3',
-    }
-  ];
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {async function fetchUsers () {
-      // const res = await axios.get('users');
-      // setUsers(res);
+      const res = await axios.get('/api/users');
+      setUsers(res);
     }
   });
   const openUserInfo = async (userID) => {
-    navigate(`/users/${userID}`);
+    navigate(`/api/users/${userID}`);
   }
   const createNewUser = async () => {
     const tag = prompt('Enter your tag'),
-      nickname = prompt('Enter your nickname');
+      nickname = prompt('Enter your nickname'),
+      role = prompt('Enter your role');
     const req = await JSON.stringify({
       tag,
       nickname,
+      role,
     });
-    await axios.post('/users', req);
+    await axios.post('/api/users', req);
   }
   return (
       <div className={styles.container}>
