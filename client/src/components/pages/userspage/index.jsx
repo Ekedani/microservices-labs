@@ -18,10 +18,14 @@ export const UsersPage = () => {
   const createNewUser = async () => {
     const tag = prompt('Enter your tag'),
       nickname = prompt('Enter your nickname'),
+      email = prompt('Enter your email'),
+      password = prompt('Enter your password'),
       role = prompt('Enter your role');
     const req = await JSON.stringify({
       tag,
       nickname,
+      email,
+      password,
       role,
     });
     await axios.post('/api/users', req);
