@@ -18,11 +18,11 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Navigate to="/api/posts" />} />
-        <Route path="/api/posts" element={<HomePage />} />
-        <Route path="/api/posts/:id" element={<Post />} />
-        <Route path="/api/users" element={<UsersPage />} />
-        <Route path="/api/users/:id" element={<User />} />
+        <Route path="/" element={<Navigate to="/posts" />} />
+        <Route path="/posts" element={<HomePage />} />
+        <Route path="/posts/:id" element={<Post />} />
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/users/:id" element={<User />} />
         <Route path="/oops" element={<ErrorPage />} />
       </Routes>
     </Router>

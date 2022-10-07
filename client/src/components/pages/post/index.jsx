@@ -9,16 +9,16 @@ export const Post = () => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {async function fetchData(){
-    const resnonse = await axios.get(`/api/posts/${id}/comments`);
+    const resnonse = await axios.get(`/posts/${id}/comments`);
     setPost(resnonse);
   }});
   useEffect(() => {async function fetchData(){
-    const resnonse = await axios.get(`/api/posts/${id}/comments`)
+    const resnonse = await axios.get(`/posts/${id}/comments`)
     setComments(resnonse);
   }}, [comments]);
   const addComment = async () => {
     const body = prompt('What you wanna say?');
-    await axios.post(`/api/posts/${id}/comments`, {
+    await axios.post(`/posts/${id}/comments`, {
       body,
     })
   }

@@ -32,7 +32,7 @@ export const User = () => {
   }
   
   useEffect(() => {async function fetchUser () {
-    const response = await axios.get(`api/users/${id}`);
+    const response = await axios.get(`/users/${id}`);
     setUser(response);
   } 
   });  
