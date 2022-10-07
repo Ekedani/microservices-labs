@@ -29,6 +29,12 @@ const CommentController = {
 
     async addComment(req, res, next) {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                throw errors.array().map((x) => {
+                    return createError(400, x.msg);
+                })
+            }
             const comment = new Comment(req.params)
             const result = await Comment.save(comment);
             res.send(result);
