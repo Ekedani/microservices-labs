@@ -32,22 +32,22 @@ export const User = () => {
   }
   
   useEffect(() => {async function fetchUser () {
-    const response = await axios.get(`/users/${id}`);
+    const response = await axios.get(`/api/users/${id}`);
     setUser(response);
   } 
   });  
   return (
       <div className={styles.container}>
         <h1 className={styles.username}>{user.username}</h1>
-        <h3 className={styles.tag}>@{user.tag}</h3>
+        <h3 className={styles.tag}>@{user.tag} ({user.role})</h3>
         <hr />
         {
           user.posts.length > 0 ?
           (
             <div>
-              <header className={styles.postsCount}>
+              {/* <header className={styles.postsCount}>
                 There are {user.posts.length} posts from {user.username}:
-              </header>
+              </header> */}
               {user.posts.map((post, i) =>
                 <PostModal key={i} header={post.header} body={post.body} onClick={() => openPost(post.id)} />)}
             </div>
