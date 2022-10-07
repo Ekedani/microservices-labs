@@ -22,12 +22,12 @@ export const UsersPage = () => {
   ];
 
   useEffect(() => {async function fetchUsers () {
-      // const res = await axios.get('api/users');
+      // const res = await axios.get('users');
       // setUsers(res);
     }
   });
   const openUserInfo = async (userID) => {
-    navigate(`/api/users/${userID}`);
+    navigate(`/users/${userID}`);
   }
   const createNewUser = async () => {
     const tag = prompt('Enter your tag'),
@@ -36,7 +36,7 @@ export const UsersPage = () => {
       tag,
       nickname,
     });
-    await axios.post('/api/users', req);
+    await axios.post('/users', req);
   }
   return (
       <div className={styles.container}>

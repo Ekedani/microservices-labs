@@ -7,16 +7,16 @@ export const UserModal = ({userID, username, tag}) => {
   const navigate = useNavigate();
   const onClick = () => {
     if (userID) {
-      return navigate(`/api/users/${userID}`)
+      return navigate(`/users/${userID}`)
     }
     return navigate(`/oops`)
   }
   const deleteUser = async () => {
-    await axios.delete(`/api/delete/${userID}`);
+    await axios.delete(`/delete/${userID}`);
   }
   const editUser = async () => {
     const newName = prompt('Input new name');
-    await axios.patch(`/api/users/${userID}`, {
+    await axios.patch(`/users/${userID}`, {
       username: newName,
     });
   }

@@ -22,12 +22,12 @@ export const PostModal = ({postID, authorID}) => {
   }, []);
   const onClick = () => {
     if (postID) {
-      return navigate(`/api/posts/${postID}`);
+      return navigate(`/posts/${postID}`);
     }
     return navigate(`/oops`);
   }
   const deletePost = async (postID) => {
-    await axios.delete(`/api/v2/posts/delete/${postID}`);
+    await axios.delete(`/posts/delete/${postID}`);
   }
   const numberOfWords = data.body.split(' ').length;
   const timeToRead = Math.ceil(numberOfWords / WORDS_PER_MINUTE);
