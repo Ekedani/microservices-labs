@@ -1,0 +1,46 @@
+@import '../../index.scss';
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: $back-color;
+}
+
+.username {
+  text-align: center;
+  font-size: $large-text;
+  color: $accent-color;
+}
+
+.tag {
+  text-align: center;
+  font-size: $medium-text;
+  color: $accent-color;
+}
+
+.postsCount {
+  text-align: center;
+  color: $lighter-color;
+}
+
+hr {
+  border: 1px solid $lighter-color;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  user-select: none;
+  background-color: $back-color;
+  border: 1px solid $accent-color;
+  color: $accent-color;
+  border-radius: 2px;
+  font-size: $small-text;
+  :hover {
+    background-color: $ultra-light-color;
+  }
+}

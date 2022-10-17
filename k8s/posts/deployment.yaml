@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts
+  template:
+    metadata:
+     labels:
+       app: posts
+    spec:
+      containers:
+        - image: posts:0.1  
+          imagePullPolicy: Never 
+          name: posts 
+          ports:
+            - containerPort: 80 

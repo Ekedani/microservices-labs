@@ -1,0 +1,63 @@
+@import '../../index.scss';
+
+.megaContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 75vw;
+  height: 75vh;
+  background-color: $back-color;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 10px;
+  position: fixed;
+  margin: auto;
+  border: 1px solid $accent-color;
+  padding: 15px;
+  * {
+    margin-bottom: 15px;
+    &:nth-last-child {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+input, textarea {
+  width: 80%;
+}
+
+.tallInput {
+  height: 200px;
+}
+
+.positive {
+  background-color: $accent-color;
+  color: $back-color;
+}
+
+button {
+  margin-right: 15px;
+  :nth-last-child {
+    margin-right: 0px;
+  }
+}
+
+header {
+  text-align: center;
+  font-size: $medium-text;
+  color: $accent-color;
+}

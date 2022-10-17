@@ -1,0 +1,49 @@
+@import '../../index.scss';
+
+h1 {
+  font-size: $medium-text;
+  color: $accent-color;
+  text-align: center;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: $back-color;
+  position: fixed;
+  top: 40px
+}
+
+.username {
+  text-align: center;
+  font-size: $large-text;
+  color: $accent-color;
+}
+
+.tag {
+  text-align: center;
+  font-size: $medium-text;
+  color: $accent-color;
+}
+
+.postsCount {
+  text-align: center;
+  color: $lighter-color;
+}
+
+hr {
+  border: 1px solid $lighter-color;
+}
+
+.newUser { 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  * {
+    margin-right: 10px;
+    :nth-last-child {
+      margin-right: 0px;
+    }
+  }
+}
