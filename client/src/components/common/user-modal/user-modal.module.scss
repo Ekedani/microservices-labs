@@ -3,7 +3,6 @@
 .container {
   user-select: none;
   width: 80vw;
-  height: 45px;
   background-color: $back-color;
   border-radius: 5px;
   border: 2px solid $accent-color;
@@ -46,5 +45,5 @@
   background-color: $lighter-color;
   border-radius: 50%;
   color: $back-color;
-  margin-right: 5px;
+  margin: 5px 5px 5px 0;
 }

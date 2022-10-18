@@ -1,15 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
 import styles from './user-modal.module.scss';
 
 export const UserModal = ({userID, username, tag}) => {
   const navigate = useNavigate();
   const onClick = () => {
     if (userID) {
-      return navigate(`/api/users/${userID}`)
+      return navigate(`/api/users/${userID}`);
     }
-    return navigate(`/oops`)
+    return navigate(`/oops`);
   }
   const deleteUser = async () => {
     await axios.delete(`/api/delete/${userID}`);
@@ -22,15 +24,15 @@ export const UserModal = ({userID, username, tag}) => {
   }
   return (
       <div className={styles.container} onClick={onClick}>
-        <div className={styles.avatar}>
+        <Avatar className={styles.avatar} sx={{ bgcolor: '#004578' }}>
           {username[0]}
-        </div>
+        </Avatar>
         <span>
           {username} (@{tag})
         </span>
         <div className={styles.buttons}>
-          <button onClick={editUser}>Edit name</button>
-          <button onClick={deleteUser}>Delete</button>
+          <Button variant="contained" onClick={editUser}>Edit name</Button>
+          <Button variant="contained" onClick={deleteUser}>Delete</Button>
         </div>
       </div>
     )
