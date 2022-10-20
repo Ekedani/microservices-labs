@@ -13,12 +13,14 @@ import { UsersPage } from "./components/pages/userspage";
 import { User } from "./components/pages/user";
 import { ErrorPage } from "./components/pages/errorpage";
 import { Post } from "./components/pages/post";
+import { Auth } from "./components/pages/auth";
 function App() {
   return (
     <Router>
       <NavBar />
       <Routes>
         <Route path="/" element={<Navigate to="/posts" />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/posts" element={<HomePage />} />
         <Route path="/posts/:id" element={<Post />} />
         <Route path="/users" element={<UsersPage />} />

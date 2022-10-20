@@ -32,12 +32,7 @@ export const UsersPage = () => {
   }
   return (
       <div className={styles.container}>
-         <h1>List of users</h1>
-        <div className={styles.newUser}>
-          <h3>Not enough users?</h3>
-          <button onClick={createNewUser}>Create</button>
-        </div>
-        
+        <h1>List of the most active users</h1>
         <hr />
         {
           users.length > 0 ?

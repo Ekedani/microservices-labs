@@ -30,7 +30,7 @@ export const User = () => {
   }
   useEffect(() => {
     // get from db
-  });  
+  });
   return (
       <div className={styles.container}>
         <h1 className={styles.username}>{user.username}</h1>
