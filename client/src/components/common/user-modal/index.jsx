@@ -13,26 +13,18 @@ export const UserModal = ({userID, username, tag}) => {
     }
     return navigate(`/oops`);
   }
-  const deleteUser = async () => {
-    await axios.delete(`/api/delete/${userID}`);
-  }
-  const editUser = async () => {
-    const newName = prompt('Input new name');
-    await axios.patch(`/api/users/${userID}`, {
-      username: newName,
-    });
-  }
   return (
       <div className={styles.container} onClick={onClick}>
         <Avatar className={styles.avatar} sx={{ bgcolor: '#004578' }}>
           {username[0]}
         </Avatar>
         <span>
-          {username} (@{tag})
+          {username} <div className={styles.tag}>&nbsp;(@{tag})</div>
         </span>
-        <div className={styles.buttons}>
-          <Button variant="contained" onClick={editUser}>Edit name</Button>
-          <Button variant="contained" onClick={deleteUser}>Delete</Button>
+        <div className={styles.vertical} style={{
+            marginLeft: 'auto'}}>
+          <b>3</b>
+          total score
         </div>
       </div>
     )

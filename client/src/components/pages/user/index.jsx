@@ -5,27 +5,27 @@ import styles from './user.module.scss';
 import { PostModal } from '../../common/post-modal';
 export const User = () => {
   const { id } = useParams();
-  const [user, setUser] = useState({});
-  // let user = {
-  //   role: 'user',
-  //   email: 'user123@gmail.com',
-  //   username: 'username',
-  //   tag: 'userprikolist123',
-  //   posts: [
-  //     {
-  //       header: 'Header 1',
-  //       body: 'Some text for blog 1',
-  //     },
-  //     {
-  //       header: 'Header 2',
-  //       body: 'Some text for blog 2',
-  //     },
-  //     {
-  //       header: 'Header 3',
-  //       body: 'Some text for blog 3',
-  //     }
-  //   ],
-  // };
+  const [user1, setUser] = useState({});
+  let user = {
+    role: 'user',
+    email: 'user123@gmail.com',
+    username: 'username',
+    tag: 'userprikolist123',
+    posts: [
+      {
+        header: 'Header 1',
+        body: 'Some text for blog 1',
+      },
+      {
+        header: 'Header 2',
+        body: 'Some text for blog 2',
+      },
+      {
+        header: 'Header 3',
+        body: 'Some text for blog 3',
+      }
+    ],
+  };
   const openPost = () => {
     //TODO redirect
     console.log('123');
@@ -39,7 +39,7 @@ export const User = () => {
   return (
       <div className={styles.container}>
         <h1 className={styles.username}>{user.username}</h1>
-        <h3 className={styles.tag}>@{user.tag}</h3>
+        <h3 className={styles.tag}>@{id}</h3>
         <hr />
         {
           user.posts.length > 0 ?

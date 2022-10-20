@@ -22,21 +22,6 @@
     justify-content: center;
     color: $accent-color;
   }
-  button {
-    color: $back-color;
-    cursor: pointer;
-    background-color: $lighter-color;
-    outline: none;
-    &:hover {
-      background-color: $accent-color;
-    }
-  }
-  .buttons {
-    display: flex;
-    flex-direction: row;
-    padding-right: 10px;
-    margin-left: auto;
-  }
 }
 
 .avatar {
@@ -46,4 +31,18 @@
   border-radius: 50%;
   color: $back-color;
   margin: 5px 5px 5px 0;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  b {
+    font-weight: bolder;
+  }
+}
+
+.tag {
+  color: $ultra-light-color;
 }
