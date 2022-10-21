@@ -9,7 +9,7 @@ const SALT_ROUNDS = process.env.SALT_ROUNDS ?? 10;
 const UserController = {
     async getAllUsers(req, res, next) {
         try {
-            const result = await User.getAll();
+            const result = await User.findAll();
             res.send(result);
         } catch (err) {
             next(err);
@@ -19,7 +19,7 @@ const UserController = {
     async findUserById(req, res, next) {
         try {
             const {id} = req.params;
-            const result = await User.findById(id);
+            const result = await User.findByPk(id);
             if (!result) {
                 throw createError(404, NOT_FOUND_MSG);
             }
@@ -38,14 +38,14 @@ const UserController = {
                 })
             }
             const password = await hash(req.body.password, SALT_ROUNDS);
-            const user = new User({
+            const user = User.build({
                 role: req.body.role,
                 email: req.body.email,
                 password,
                 username: req.body.username,
                 tag: req.body.tag
             });
-            const result = await User.save(user);
+            const result = await user.save();
             res.send(result);
         } catch (err) {
             next(err);
@@ -55,11 +55,11 @@ const UserController = {
     async deleteUserById(req, res, next) {
         try {
             const {id} = req.params;
-            const result = await User.deleteById(id);
-            if (!result) {
+            const isDeleted = await User.destroy({where: {id: id}});
+            if (!isDeleted) {
                 throw createError(404, NOT_FOUND_MSG);
             }
-            res.send(result);
+            res.status(204).send();
         } catch (err) {
             next(err);
         }
@@ -78,18 +78,20 @@ const UserController = {
             if (req.body.password) {
                 password = await hash(req.body.password, SALT_ROUNDS);
             }
-            const user = new User({
+            const result = await User.update({
                 role: req.body.role,
                 email: req.body.email,
                 password,
                 username: req.body.username,
                 tag: req.body.tag
+            }, {
+                where: {id: id},
+                returning: true,
             });
-            const result = await User.updateById(id, user);
-            if (!result) {
+            if (!result[0]) {
                 throw createError(404, NOT_FOUND_MSG);
             }
-            res.send(result);
+            res.send(result[1]);
         } catch (err) {
             next(err);
         }
