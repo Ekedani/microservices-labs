@@ -10,7 +10,7 @@ const UserController = {
     async getAllUsers(req, res, next) {
         try {
             const result = await User.findAll();
-            res.send(result);
+            res.send({users: result});
         } catch (err) {
             next(err);
         }
