@@ -6,6 +6,7 @@ const sequelize = new Sequelize(config.database, config.user, config.password, {
     dialect: config.dialect
 });
 
+
 const Comment = sequelize.define('Comment', {
     id: {
         type: DataTypes.STRING,
@@ -14,6 +15,12 @@ const Comment = sequelize.define('Comment', {
     body: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            len: {
+                args: [5, 512],
+                msg: 'Comment must be between 5 and 512 characters length'
+            }
+        }
     },
     date: {
         type: DataTypes.DATE,
@@ -28,7 +35,8 @@ const Comment = sequelize.define('Comment', {
         allowNull: false,
     }
 }, {
-    tableName: 'comments',
+    tableName: 'users',
+    timestamps: false
 });
 
 export default Comment;
