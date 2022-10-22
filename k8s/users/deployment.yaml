@@ -22,7 +22,7 @@ spec:
             - name: VERSION
               value: "20221022132417"    
       containers:
-        - image: users:0.2  
+        - image: users:0.1  
           imagePullPolicy: Never 
           name: users 
           ports:
