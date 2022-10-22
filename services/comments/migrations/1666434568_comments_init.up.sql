@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS comments
+(
+    id VARCHAR (512) PRIMARY KEY,
+    body VARCHAR (512) UNIQUE NOT NULL,
+    post_id UUID NOT NULL,
+    author_id UUID NOT NULL
+);
