@@ -12,8 +12,17 @@ spec:
      labels:
        app: users
     spec:
+      initContainers:
+        - name: run-migrations
+          image: users-service-migrations:0.1
+          command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
+          env:
+            - name: POSTGRESQL_URL
+              value: "postgres://postgres:whereismymind@users-postgres:5432/postgres?sslmode=disable"
+            - name: VERSION
+              value: "20221022132417"    
       containers:
-        - image: users:0.1  
+        - image: users:0.2  
           imagePullPolicy: Never 
           name: users 
           ports:
