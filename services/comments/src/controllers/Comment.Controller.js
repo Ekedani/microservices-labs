@@ -1,4 +1,4 @@
-import Comment from '../modules/Comment.Model.js';
+import Comment from '../models/Comment.Model.js';
 import createError from 'http-errors';
 import {body, validationResult} from "express-validator";
 
@@ -6,9 +6,9 @@ import {body, validationResult} from "express-validator";
 const CommentController = {
     async getAllComments(req, res, next) {
         try {
-            const { postID } = req.params;
-            const result = await Comment.getAll(postID);
-            res.send(result);
+            const { post_id } = req.params;
+            const result = await Comment.findAll({where: {post_id}});
+            res.send({ comments: result });
         } catch (err) {
             next(err);
         }
@@ -16,8 +16,8 @@ const CommentController = {
 
     async findCommentById(req, res, next) {
         try {
-            const { id } = req.params;
-            const result = await User.findById(id);
+            const { post_id } = req.params;
+            const result = await Comment.findByPk(post_id);
             if (!result) {
                 throw createError(404, 'This comment doesn`t exist');
             }
@@ -30,7 +30,7 @@ const CommentController = {
     async addComment(req, res, next) {
         try {
             const comment = new Comment(req.params)
-            const result = await Comment.save(comment);
+            const result = await comment.save();
             res.send(result);
         } catch (err) {
             next(err);
@@ -39,12 +39,12 @@ const CommentController = {
 
     async deleteCommentById(req, res, next) {
         try {
-            const { commentID, postID } = req.params;
-            const result = await Comment.deleteById(commentID, postID);
-            if (!result) {
+            const { id } = req.params;
+            const isDeleted = await Comment.destroy({where: {id}});
+            if (!isDeleted) {
                 throw createError(404, 'This comment doesn`t exist');
             }
-            res.send(result);
+            res.status(204).send();
         } catch (err) {
             next(err);
         }
