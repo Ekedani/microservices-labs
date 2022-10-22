@@ -10,7 +10,8 @@ const sequelize = new Sequelize(config.database, config.user, config.password, {
 const Comment = sequelize.define('Comment', {
     id: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true
     },
     body: {
         type: DataTypes.STRING,
