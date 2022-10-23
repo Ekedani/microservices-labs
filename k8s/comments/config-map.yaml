@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: comments-config
+data:
+  DB: postgres
+  DB_HOST: feed-postgres

@@ -12,9 +12,19 @@ spec:
      labels:
        app: comments
     spec:
+      initContainers:
+        - name: run-migrations
+          image: hxnchar/comments-migrations:0.1
+          imagePullPolicy: IfNotPresent 
+          command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
+          env:
+            - name: POSTGRESQL_URL
+              value: "postgres://postgres:whereismymind@feed-postgres:5432/postgres?sslmode=disable"
+            - name: VERSION
+              value: "20221023185401"    
       containers:
-        - image: comments:0.1  
-          imagePullPolicy: Never 
+        - image: hxnchar/comments:0.1  
+          imagePullPolicy: IfNotPresent 
           name: comments 
           ports:
             - containerPort: 3000 
