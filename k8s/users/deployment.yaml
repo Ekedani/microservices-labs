@@ -14,7 +14,8 @@ spec:
     spec:
       initContainers:
         - name: run-migrations
-          image: users-service-migrations:0.1
+          image: ekedani/users-migrations:0.1
+          imagePullPolicy: IfNotPresent 
           command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
           env:
             - name: POSTGRESQL_URL
