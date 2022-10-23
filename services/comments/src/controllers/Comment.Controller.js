@@ -1,6 +1,5 @@
 import Comment from '../models/Comment.Model.js';
 import createError from 'http-errors';
-import { body } from 'express-validator';
 
 const CommentController = {
     async getAllComments(req, res, next) {
@@ -28,8 +27,13 @@ const CommentController = {
 
     async addComment(req, res, next) {
         try {
-            const comment = new Comment(req.params)
-            comment.id = `${Date.now()}_${req.params.post_id}_${req.params.author_id}`;
+            const comment_id = `${Date.now()}_${req.params.post_id}_${req.params.author_id}`;
+            const comment = Comment.build({
+                id: comment_id,
+                body: req.body.body,
+                author_id: req.body.author_id,
+                post_id: req.body.post_id
+            });
             const result = await comment.save();
             res.send(result);
         } catch (err) {
@@ -49,15 +53,6 @@ const CommentController = {
             next(err);
         }
     },
-    validate(method) {
-        switch (method) {
-            case 'Post': {
-                return [
-                    body('text', 'Comment body length must be more than 3 characters').isLength({min: 3}),
-                ];
-            }
-        }
-    }
 }
 
 export default CommentController;

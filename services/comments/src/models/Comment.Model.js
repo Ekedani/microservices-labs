@@ -11,7 +11,7 @@ const Comment = sequelize.define('Comment', {
     id: {
         type: DataTypes.STRING(512),
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
     },
     body: {
         type: DataTypes.STRING(512),
@@ -23,20 +23,16 @@ const Comment = sequelize.define('Comment', {
             }
         }
     },
-    date: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
     post_id: {
         type: DataTypes.NUMBER,
         allowNull: false,
     },
     author_id: {
-        type: DataTypes.UUID,
+        type: DataTypes.NUMBER,
         allowNull: false,
     }
 }, {
-    tableName: 'users',
+    tableName: 'comments',
     timestamps: false
 });
 
