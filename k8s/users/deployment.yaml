@@ -22,8 +22,8 @@ spec:
             - name: VERSION
               value: "20221022132417"    
       containers:
-        - image: users:0.1  
-          imagePullPolicy: Never 
+        - image: ekedani/users:0.1  
+          imagePullPolicy: IfNotPresent 
           name: users 
           ports:
             - containerPort: 3000 
