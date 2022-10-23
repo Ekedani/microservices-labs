@@ -1,7 +1,7 @@
 :: I'm too tired of building images manually so I've created this .bat
 :: Minikube must be started
+:: Run (minikube -p minikube docker-env | Invoke-Expression) before start
 
-:: minikube -p minikube docker-env | Invoke-Expression
 set rootDir=%cd%
 
 cd %rootDir%\services\users\
