@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 export default {
   database: process.env.DB,
   user: process.env.DB_USER,

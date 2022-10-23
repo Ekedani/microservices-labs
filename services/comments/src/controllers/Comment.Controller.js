@@ -1,7 +1,6 @@
 import Comment from '../models/Comment.Model.js';
 import createError from 'http-errors';
-import { body, validationResult } from "express-validator";
-
+import { body } from 'express-validator';
 
 const CommentController = {
     async getAllComments(req, res, next) {
@@ -30,6 +29,7 @@ const CommentController = {
     async addComment(req, res, next) {
         try {
             const comment = new Comment(req.params)
+            comment.id = `${Date.now()}_${req.params.post_id}_${req.params.author_id}`;
             const result = await comment.save();
             res.send(result);
         } catch (err) {
