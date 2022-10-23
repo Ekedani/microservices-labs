@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: users-postgres
-          image: postgres:14.1-alpine3.15
+          image: postgres:14.1-alpine3.15   # You can try to use another image. But I wouldn't recommend it - since I've only tested on this one
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
