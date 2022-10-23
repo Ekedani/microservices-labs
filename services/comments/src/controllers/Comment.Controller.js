@@ -5,7 +5,7 @@ const CommentController = {
     async getAllComments(req, res, next) {
         try {
             const { post_id } = req.params;
-            const result = await Comment.findAll({where: {post_id}});
+            const result = await Comment.findAll({where: { post_id }});
             res.send({ comments: result });
         } catch (err) {
             next(err);
@@ -14,8 +14,8 @@ const CommentController = {
 
     async findCommentById(req, res, next) {
         try {
-            const { post_id } = req.params;
-            const result = await Comment.findByPk(post_id);
+            const { comment_id } = req.params;
+            const result = await Comment.findByPk(comment_id);
             if (!result) {
                 throw createError(404, 'This comment doesn`t exist');
             }
@@ -43,8 +43,8 @@ const CommentController = {
 
     async deleteCommentById(req, res, next) {
         try {
-            const { id } = req.params;
-            const isDeleted = await Comment.destroy({where: {id}});
+            const { comment_id } = req.params;
+            const isDeleted = await Comment.destroy({where: { comment_id }});
             if (!isDeleted) {
                 throw createError(404, 'This comment doesn`t exist');
             }

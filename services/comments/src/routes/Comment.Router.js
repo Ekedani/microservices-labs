@@ -3,8 +3,9 @@ import CommentController from "../controllers/Comment.Controller.js";
 
 const router = Router();
 
-router.get('/posts/:postID/comments', CommentController.getAllComments);
-router.post('/posts/:postID/comments', CommentController.addComment);
-router.delete('/posts/:postID/comments/:id', CommentController.deleteCommentById);
+router.get('/posts/:post_id/comments', CommentController.getAllComments);
+router.get('/posts/:post_id/comments/:comment_id', CommentController.findCommentById);
+router.post('/posts/:post_id/comments', CommentController.addComment);
+router.delete('/posts/:post_id/comments/:comment_id', CommentController.deleteCommentById);
 
 export default router;
