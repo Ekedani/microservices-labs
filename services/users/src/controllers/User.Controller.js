@@ -48,6 +48,7 @@ const UserController = {
 
     async deleteUserById(req, res, next) {
         try {
+            const {id} = req.params;
             const isDeleted = await User.destroy({where: {id: id}});
             if (!isDeleted) {
                 throw createError(404, NOT_FOUND_MSG);
