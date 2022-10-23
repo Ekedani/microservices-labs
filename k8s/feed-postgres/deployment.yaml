@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feed-postgres
+  template:
+    metadata:
+      labels:
+        app: feed-postgres
+    spec:
+      containers:
+        - name: feed-postgres
+          image: postgres:14.1-alpine3.15   # You can try to use another image. But I wouldn't recommend it - since I've only tested on this one
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: feed-postgres-config
+            - secretRef:
+                name: feed-postgres-secret
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: userpostgredb
+      volumes:
+        - name: userpostgredb
+          persistentVolumeClaim:
+            claimName: feed-postgres-volume-claim
