@@ -24,12 +24,12 @@
 - `POST /api/v2/posts/add` --- add new post
 - `DELETE /api/v2/posts/delete/id` --- delete post by id
 
-**Comments** microservice [DockerHub](https://hub.docker.com/r/hxnchar/comments):
+**Comments** microservice ([DockerHub](https://hub.docker.com/r/hxnchar/comments)):
 - `GET /api/posts/:id/comments` --- get list of comments to post
 - `GET /api/posts/:id/comments/:id` --- get comment by id
 - `POST /api/posts/:id/comments` --- add new comment
 - `DELETE /api/posts/:id/comments/:id` --- delete comment
 
-**Client** microservice [DockerHub](https://hub.docker.com/r/hxnchar/client)
+**Client** microservice ([DockerHub](https://hub.docker.com/r/hxnchar/client))
 
 # Welcome to Best Blog You`ve Ever Seen🤡
