@@ -27,7 +27,7 @@ const CommentController = {
 
     async addComment(req, res, next) {
         try {
-            const comment_id = `${Date.now()}_${req.params.post_id}_${req.params.author_id}`;
+            const comment_id = `${Date.now()}_${req.params.post_id}_${req.body.author_id}`;
             const comment = Comment.build({
                 id: comment_id,
                 body: req.body.body,
@@ -44,7 +44,7 @@ const CommentController = {
     async deleteCommentById(req, res, next) {
         try {
             const { comment_id } = req.params;
-            const isDeleted = await Comment.destroy({where: { comment_id }});
+            const isDeleted = await Comment.destroy({where: { id: comment_id }});
             if (!isDeleted) {
                 throw createError(404, 'This comment doesn`t exist');
             }
