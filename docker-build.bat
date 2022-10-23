@@ -4,9 +4,6 @@
 
 set rootDir=%cd%
 
-cd %rootDir%\services\users\
-docker build -t users:0.1 .
-
 cd %rootDir%\services\posts\
 docker build -t posts:0.1 -f \PostService\DockerFile .
 
