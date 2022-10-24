@@ -14,7 +14,7 @@ spec:
     spec:
       initContainers:
         - name: run-migrations
-          image: alexeyformicrolab/posts-migrations:0.1
+          image: alexeyformicrolab/posts-migrations:0.1.1
           imagePullPolicy: IfNotPresent 
           command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
           env:
@@ -23,7 +23,7 @@ spec:
             - name: VERSION
               value: "20221023185401"     
       containers:
-        - image: alexeyformicrolab/posts:0.1  
+        - image: alexeyformicrolab/posts:0.1 
           imagePullPolicy: IfNotPresent 
           name: posts 
           ports:
