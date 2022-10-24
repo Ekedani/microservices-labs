@@ -28,3 +28,8 @@ spec:
           name: comments 
           ports:
             - containerPort: 3000 
+          envFrom:
+            - configMapRef:
+                name: comments-config
+            - secretRef:
+                name: comments-secret
