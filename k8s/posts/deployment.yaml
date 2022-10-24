@@ -12,9 +12,24 @@ spec:
      labels:
        app: posts
     spec:
+      initContainers:
+        - name: run-migrations
+          image: alexeyformicrolab/posts-migrations:0.1
+          imagePullPolicy: IfNotPresent 
+          command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
+          env:
+            - name: POSTGRESQL_URL
+              value: "postgres://postgres:whereismymind@feed-postgres:5432/postgres?sslmode=disable"
+            - name: VERSION
+              value: "20221023185401"     
       containers:
-        - image: posts:0.1  
-          imagePullPolicy: Never 
+        - image: alexeyformicrolab/posts:0.1  
+          imagePullPolicy: IfNotPresent 
           name: posts 
           ports:
             - containerPort: 80 
+          envFrom:
+            - configMapRef:
+                name: posts-config
+            - secretRef:
+                name: posts-secret
