@@ -14,7 +14,11 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB": "CommentPost",
+        "DB_USER": "postgres",
+        "DB_PASSWORD": "admin",
+        "DB_HOST": "localhost"
       },
       "applicationUrl": "https://localhost:7141;http://localhost:5141",
       "dotnetRunMessages": true
@@ -24,7 +28,11 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB": "CommentPost",
+        "DB_USER": "postgres",
+        "DB_PASSWORD": "admin",
+        "DB_HOST": "localhost"
       }
     },
     "Docker": {
@@ -32,7 +40,13 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": true,
+      "environmentVariables": {
+        "DB": "CommentPost",
+        "DB_USER": "postgres",
+        "DB_PASSWORD": "admin",
+        "DB_HOST": "localhost"
+      }
     }
   }
 }
