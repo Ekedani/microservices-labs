@@ -30,8 +30,7 @@
 - `POST /api/posts/:id/comments` --- add new comment
 - `DELETE /api/posts/:id/comments/:id` --- delete comment
 
-**Comments migration:** [DockerHub](https://hub.docker.com/r/hxnchar/comments-migration):
-https://hub.docker.com/r/hxnchar/comments-migration
+**Comments migration:** [DockerHub](https://hub.docker.com/r/hxnchar/comments-migration)
 
 **Client** microservice ([DockerHub](https://hub.docker.com/r/hxnchar/client))
 
