@@ -40,13 +40,7 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "publishAllPorts": true,
-      "useSSL": true,
-      "environmentVariables": {
-        "DB": "CommentPost",
-        "DB_USER": "postgres",
-        "DB_PASSWORD": "admin",
-        "DB_HOST": "localhost"
-      }
+      "useSSL": true
     }
   }
 }
