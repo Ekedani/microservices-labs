@@ -1,0 +1,7 @@
+﻿CREATE TABLE IF NOT EXISTS Posts
+(
+    id BIGSERIAL PRIMARY KEY,
+    header VARCHAR(256) NOT NULL,
+    body VARCHAR(1024) NOT NULL,
+    author_id VARCHAR(256) NOT NULL
+);

@@ -14,7 +14,7 @@ spec:
     spec:
       initContainers:
         - name: run-migrations
-          image: hxnchar/comments-migrations:0.1
+          image: hxnchar/comments-migration:0.1
           imagePullPolicy: IfNotPresent 
           command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
           env:
@@ -28,3 +28,8 @@ spec:
           name: comments 
           ports:
             - containerPort: 3000 
+          envFrom:
+            - configMapRef:
+                name: comments-config
+            - secretRef:
+                name: comments-secret
