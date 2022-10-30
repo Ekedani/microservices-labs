@@ -14,12 +14,12 @@ spec:
     spec:
       initContainers:
         - name: run-migrations
-          image: hxnchar/comments-migration:0.1
+          image: comdebugmigr:0.3
           imagePullPolicy: IfNotPresent 
           command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
           env:
             - name: POSTGRESQL_URL
-              value: "postgres://postgres:postspassword@posts-postgres:5432/postgres?sslmode=disable"
+              value: "postgres://postgres:commentspassword@comments-postgres:5432/postgres?sslmode=disable"
             - name: VERSION
               value: "20221023185401"    
       containers:

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments-postgres
+  template:
+    metadata:
+      labels:
+        app: comments-postgres
+    spec:
+      containers:
+        - name: comments-postgres
+          image: postgres:14.1-alpine3.15
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: comments-postgres-config
+            - secretRef:
+                name: comments-postgres-secret
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: commentpostgredb
+      volumes:
+        - name: commentpostgredb
+          persistentVolumeClaim:
+            claimName: comments-postgres-volume-claim

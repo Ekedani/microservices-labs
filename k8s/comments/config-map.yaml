@@ -4,4 +4,4 @@ metadata:
   name: comments-config
 data:
   DB: postgres
-  DB_HOST: posts-postgres
+  DB_HOST: comments-postgres
