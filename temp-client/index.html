@@ -39,7 +39,7 @@
                 <label> Password: <input type="password" name="password"> </label>
                 <label> Username: <input type="text" name="username"> </label>
                 <label> Tag: <input type="text" name="tag"> </label>
-                <button type="submit" class="request-demo__send-btn">Send request</button>
+                <button type="submit" class="request-demo__send-btn USERS">Send request</button>
             </form>
             <div class="request-demo__result user-result">
                 <p class="request-demo__status">Status Unknown</p>
@@ -64,7 +64,7 @@
             <h2 class="request-demo__header">
                 Comments Service
             </h2>
-            <form class="user-form">
+            <form class="comment-form">
               <div class="request-demo__method radio-form">
                   <p>Method:</p>
                   <label> GET <input type="radio" name="method" value="GET" checked> </label>
@@ -74,16 +74,10 @@
               </div>
               <p>Request params:</p>
               <label> ID: <input type="text" name="id" placeholder="Leave empty if don't need"> </label>
-              <div class="radio-form">
-                  <p>Role:</p>
-                  <label> admin <input type="radio" name="role" value="admin"> </label>
-                  <label> user <input type="radio" name="role" value="user" checked> </label>
-              </div>
-              <label> Email: <input type="email" name="email"> </label>
-              <label> Password: <input type="password" name="password"> </label>
-              <label> Username: <input type="text" name="username"> </label>
-              <label> Tag: <input type="text" name="tag"> </label>
-              <button type="submit" class="request-demo__send-btn">Send request</button>
+              <label> Body: <input name="body"> </label>
+              <label> Post ID: <input name="post_id"> </label>
+              <label> Author ID: <input name="author_id"> </label>
+              <button type="submit" class="request-demo__send-btn COMMENTS">Send request</button>
             </form>
         </div>
     </div>
