@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migrate-posts-postgres
+spec:
+  template:
+    spec:
+      containers:
+      - name: run-migrations
+        image: ekedani/posts-migrations:0.1
+        imagePullPolicy: IfNotPresent 
+          command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
+          env:
+            - name: POSTGRESQL_URL
+              value: "postgres://postgres:postspassword@posts-postgres:5432/postgres?sslmode=disable"
+            - name: VERSION
+              value: "20221023185401"
+      restartPolicy: Never    

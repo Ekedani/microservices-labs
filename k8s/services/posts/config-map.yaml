@@ -4,4 +4,4 @@ metadata:
   name: posts-config
 data:
   DB: postgres
-  DB_HOST: feed-postgres
+  DB_HOST: posts-postgres
