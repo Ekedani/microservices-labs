@@ -5,10 +5,9 @@
 - Oleksii Bilko: [Posts microservice](https://github.com/Ekedani/microservices-labs/tree/master/services/posts) 
 ## How to run? 🚀
 
-1. Grab 2 cans of beer
-2. Run ```script```
-3. Open some [cool video](https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley)
-4. Enjoy🍻
+1. Open the root directory
+2. Run ```sh start.sh``` (or just run commands in the file on by one)
+3. Enjoy🍻
 
 ## Supported endpoints🧑‍💻
 **Users** microservice:
