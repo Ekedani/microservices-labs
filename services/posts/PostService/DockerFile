@@ -16,21 +16,10 @@ COPY . .
 WORKDIR "/src/PostService"
 RUN dotnet build "PostService.csproj" -c Release -o /app/build
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1903 AS migration
-WORKDIR /src
-COPY . .
-RUN dotnet restore "LearningAnalytics.Migration/LearningAnalytics.Migration.csproj"
-COPY . .
-WORKDIR "/src/LearningAnalytics.Migration"
-RUN dotnet build "LearningAnalytics.Migration.csproj" -c Release -o /app/migration
-
 FROM build AS publish
 RUN dotnet publish "PostService.csproj" -c Release -o /app/publish
 
 FROM base AS final
-WORKDIR /migration
-COPY --from=migration /app/migration .
-
 WORKDIR /app
 COPY --from=build /src/PostService/data.txt .
 COPY --from=publish /app/publish .
