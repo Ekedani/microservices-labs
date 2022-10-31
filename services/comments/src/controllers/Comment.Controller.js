@@ -41,6 +41,22 @@ const CommentController = {
         }
     },
 
+    async updateCommentById(req, res, next) {
+        try {
+            const id = req.params.comment_id;
+            const comment = await Comment.findByPk(id);
+            if (!comment) {
+                throw createError(404, 'This comment doesn`t exist');
+            }
+            await comment.update({
+                body: req.body.body,
+            })
+            res.send(comment);
+        } catch (err) {
+            next(err);
+        }
+    },
+
     async deleteCommentById(req, res, next) {
         try {
             const { comment_id } = req.params;

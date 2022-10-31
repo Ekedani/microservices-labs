@@ -26,7 +26,8 @@ main {
 }
 
 .request-users__demo__main,
-.request-comments__demo__main {
+.request-comments__demo__main,
+.request-posts__demo__main {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -34,13 +35,15 @@ main {
 }
 
 .request-users__demo__params,
-.request-comments__demo__params{
+.request-comments__demo__params,
+.request-posts__demo__params {
     display: flex;
     flex-direction: column;
 }
 
 .request-users__demo__params label,
-.request-comments__demo__params label {
+.request-comments__demo__params label,
+.request-posts__demo__params label {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
@@ -61,12 +64,14 @@ main {
 }
 
 .request-users__demo__result,
-.request-comments__demo__result {
+.request-comments__demo__result,
+.request-posts__demo__result {
     width: 60%;
 }
 
 .request-users__demo__response,
-.request-comments__demo__response {
+.request-comments__demo__response,
+.request-posts__demo__response {
     resize: none;
     box-sizing: border-box;
     border: none;

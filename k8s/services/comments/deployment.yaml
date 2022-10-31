@@ -13,7 +13,7 @@ spec:
        app: comments
     spec:
       containers:
-        - image: hxnchar/comments:0.1  
+        - image: hxnchar/comments:0.1.2 
           imagePullPolicy: IfNotPresent 
           name: comments 
           ports:

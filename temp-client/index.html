@@ -49,27 +49,17 @@
     </div>
 
     <div class="request-demo">
-        <div>
-            <h2 class="request-users__demo__header">
-                Posts Service
-            </h2>
-            <form>
-
-            </form>
-        </div>
-    </div>
-
-    <div class="request-demo">
       <div>
           <h2 class="request-posts__demo__header">
               Posts Service
           </h2>
+          <div class="request-users__demo__main">
           <form class="posts-form">
             <div class="request-posts__demo__method radio-form">
               <p>Method:</p>
               <label> GET <input type="radio" name="method" value="GET" checked> </label>
               <label> POST <input type="radio" name="method" value="POST"> </label>
-              <label> PATCH <input type="radio" name="method" value="PATCH"> </label>
+              <label> PUT <input type="radio" name="method" value="PUT"> </label>
               <label> DELETE <input type="radio" name="method" value="DELETE"> </label>
             </div>
             <p>Request params:</p>
@@ -77,11 +67,13 @@
             <label> Header: <input name="header"> </label>
             <label> Body: <input name="body"> </label>
             <label> Author ID: <input name="author_id"> </label>
-            <button type="submit" class="request-comments__demo__send-btn">Send request</button>
+            <button type="submit" class="request-posts__demo__send-btn">Send request</button>
           </form>
           <div class="request-posts__demo__result user-result">
             <p class="request-posts__demo__status">Status Unknown</p>
             <textarea class="request-posts__demo__response"></textarea>
+          </div>
+          </div>
         </div>
       </div>
   </div>
@@ -91,11 +83,13 @@
             <h2 class="request-comments__demo__header">
                 Comments Service
             </h2>
+            <div class="request-comments__demo__main">
             <form class="comments-form">
               <div class="request-comments__demo__method radio-form">
                   <p>Method:</p>
                   <label> GET <input type="radio" name="method" value="GET" checked> </label>
                   <label> POST <input type="radio" name="method" value="POST"> </label>
+                  <label> PATCH <input type="radio" name="method" value="PATCH"> </label>
                   <label> DELETE <input type="radio" name="method" value="DELETE"> </label>
               </div>
               <p>Request params:</p>
@@ -106,9 +100,11 @@
               <button type="submit" class="request-comments__demo__send-btn">Send request</button>
             </form>
             <div class="request-comments__demo__result user-result">
+              
               <p class="request-comments__demo__status">Status Unknown</p>
               <textarea class="request-comments__demo__response"></textarea>
           </div>
+        </div>
         </div>
     </div>
 </main>
