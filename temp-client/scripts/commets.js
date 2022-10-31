@@ -25,19 +25,19 @@ commentsBtn.addEventListener('click', async (event) => {
       switch (method) {
           case 'GET':
               if (id.length === 0) {
-                  res = await fetch(`http://localhost/api/posts/${post_id}/comments`, {
+                  res = await fetch(`/api/posts/${post_id}/comments`, {
                       method: 'GET',
                   });
                   result = await res.json();
               } else {
-                  res = await fetch(`http://localhost/api/posts/${post_id}/comments/${id}`, {
+                  res = await fetch(`/api/posts/${post_id}/comments/${id}`, {
                       method: 'GET',
                   });
                   result = await res.json();
               }
               break;
           case 'POST':
-            res = await fetch(`http://localhost/api/posts/${post_id}/comments`, {
+            res = await fetch(`/api/posts/${post_id}/comments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -47,8 +47,8 @@ commentsBtn.addEventListener('click', async (event) => {
             result = await res.json();
               break;
           case 'PATCH':
-            console.log(`http://localhost/api/posts/${post_id}/comments/${id}`);
-            res = await fetch(`http://localhost/api/posts/${post_id}/comments/${id}`, {
+            console.log(`/api/posts/${post_id}/comments/${id}`);
+            res = await fetch(`/api/posts/${post_id}/comments/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -58,7 +58,7 @@ commentsBtn.addEventListener('click', async (event) => {
             result = await res.json();
             break;
           case 'DELETE':
-              res = await fetch(`http://localhost/api/posts/${post_id}/comments/${id}`, {
+              res = await fetch(`/api/posts/${post_id}/comments/${id}`, {
                   method: 'DELETE',
               });
               result = res;
