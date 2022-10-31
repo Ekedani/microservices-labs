@@ -25,19 +25,19 @@ userBtn.addEventListener('click', async (event) => {
         switch (method) {
             case 'GET':
                 if (id.length === 0) {
-                    res = await fetch('http://localhost/api/users', {
+                    res = await fetch('/api/users', {
                         method: 'GET',
                     });
                     result = await res.json();
                 } else {
-                    res = await fetch(`http://localhost/api/users/${id}`, {
+                    res = await fetch(`/api/users/${id}`, {
                         method: 'GET',
                     });
                     result = await res.json();
                 }
                 break;
             case 'POST':
-              res = await fetch(`http://localhost/api/users`, {
+              res = await fetch(`/api/users`, {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/x-www-form-urlencoded'
@@ -53,7 +53,7 @@ userBtn.addEventListener('click', async (event) => {
                 body.append(value[0], value[1]);
               }
               console.log(Array.from(body));
-              res = await fetch(`http://localhost/api/users/${id}`, {
+              res = await fetch(`/api/users/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -63,7 +63,7 @@ userBtn.addEventListener('click', async (event) => {
               result = await res.json();
               break;
             case 'DELETE':
-                res = await fetch(`http://localhost/api/users/${id}`, {
+                res = await fetch(`/api/users/${id}`, {
                     method: 'DELETE',
                 });
                 result = res;
