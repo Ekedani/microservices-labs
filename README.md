@@ -16,12 +16,13 @@
 - `POST /api/users` --- create new user
 - `PATCH /api/users/:id` --- edit user
 - `DELETE /api/users/:id` --- delete user
+*Body consists of next fields: role, email, password, username, tag. Content type must be x-www-form-urlencoded*
 
 **Posts** microservice:
-- `GET /api/v2/posts/getall` --- get list of all posts
-- `GET /api/v2/posts/get/:id` --- get user by id
-- `POST /api/v2/posts/add` --- add new post
-- `DELETE /api/v2/posts/delete/id` --- delete post by id
+- `GET /api/posts` --- get list of all posts
+- `GET /api/posts/:id` --- get user by id
+- `POST /api/posts` --- add new post
+- `DELETE /api/posts/:id` --- delete post by id
 
 **Comments** microservice ([DockerHub](https://hub.docker.com/r/hxnchar/comments)):
 - `GET /api/posts/:id/comments` --- get list of comments to post
