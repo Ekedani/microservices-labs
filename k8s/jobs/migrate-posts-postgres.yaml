@@ -15,4 +15,4 @@ spec:
               value: "postgres://postgres:postspassword@posts-postgres:5432/postgres?sslmode=disable"
             - name: VERSION
               value: "20221023185401"
-      restartPolicy: Never    
+      restartPolicy: OnFailure    
