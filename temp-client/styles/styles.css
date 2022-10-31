@@ -25,19 +25,22 @@ main {
     margin-top: 40px;
 }
 
-.request-demo__main {
+.request-users__demo__main,
+.request-comments__demo__main {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     margin-right: auto;
 }
 
-.request-demo__params {
+.request-users__demo__params,
+.request-comments__demo__params{
     display: flex;
     flex-direction: column;
 }
 
-.request-demo__params label {
+.request-users__demo__params label,
+.request-comments__demo__params label {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
@@ -57,11 +60,13 @@ main {
     margin-bottom: 10px;
 }
 
-.request-demo__result {
+.request-users__demo__result,
+.request-comments__demo__result {
     width: 60%;
 }
 
-.request-demo__response {
+.request-users__demo__response,
+.request-comments__demo__response {
     resize: none;
     box-sizing: border-box;
     border: none;

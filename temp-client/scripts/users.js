@@ -1,10 +1,10 @@
-const userForm = document.querySelector('.user-form')
-const userBtn = userForm.querySelector('.request-demo__send-btn')
+const userForm = document.querySelector('.user-form');
+const userBtn = userForm.querySelector('.request-users__demo__send-btn');
 
 userBtn.addEventListener('click', async (event) => {
     event.preventDefault();
-    const responseStatus = document.querySelector('.request-demo__status')
-    const response = document.querySelector('.request-demo__response')
+    const responseStatus = document.querySelector('.request-users__demo__status')
+    const response = document.querySelector('.request-users__demo__response')
 
     const formData = {};
     for (let number = 0; number < userForm.elements.length - 1; number++) {
