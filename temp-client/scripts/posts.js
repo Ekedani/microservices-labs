@@ -25,19 +25,19 @@ postsBtn.addEventListener('click', async (event) => {
         switch (method) {
             case 'GET':
                 if (id.length === 0) {
-                    res = await fetch('http://localhost/api/posts', {
+                    res = await fetch('/api/posts', {
                         method: 'GET',
                     });
                     result = await res.json();
                 } else {
-                    res = await fetch(`http://localhost/api/posts/${id}`, {
+                    res = await fetch(`/api/posts/${id}`, {
                         method: 'GET',
                     });
                     result = await res.json();
                 }
                 break;
             case 'POST':
-              res = await fetch(`http://localhost/api/posts`, {
+              res = await fetch(`/api/posts`, {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/x-www-form-urlencoded'
@@ -47,7 +47,7 @@ postsBtn.addEventListener('click', async (event) => {
               result = await res.json();
                 break;
             case 'DELETE':
-                res = await fetch(`http://localhost/api/posts/${id}`, {
+                res = await fetch(`/api/posts/${id}`, {
                     method: 'DELETE',
                 });
                 result = res;
