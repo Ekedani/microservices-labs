@@ -13,7 +13,7 @@ spec:
        app: posts
     spec: 
       containers:
-        - image: alexeyformicrolab/posts:0.1.2
+        - image: alexeyformicrolab/posts:0.1.4
           imagePullPolicy: IfNotPresent 
           name: posts 
           ports:

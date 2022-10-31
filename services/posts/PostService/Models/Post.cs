@@ -2,9 +2,9 @@
 {
     public class Post
     {
-        public int Id { get; set; }
-        public string Header { get; set; } 
-        public string Body { get; set; }
-        public string Author_Id { get; set; }
+        public int id { get; set; }
+        public string header { get; set; } 
+        public string body { get; set; }
+        public string author_id { get; set; }
     }
 }
