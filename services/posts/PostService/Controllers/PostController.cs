@@ -1,8 +1,12 @@
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PostService.Models;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PostService.Data;
 
@@ -14,20 +18,19 @@ namespace PostService.Controllers
     public class PostController : ControllerBase
     {
         //public IConfiguration server;
-        private AppDBContext context;
+        private readonly AppDBContext context;
 
-        private List<Post> Posts = new List<Post>() 
-        { 
-            new Post() { id = 1, header = "Header 1", body = "Some Text in Post 1", author_id = "1" }, 
-            new Post() { id = 2, header = "Header 2", body = "Some Text in Post 2", author_id = "1" }, 
-            new Post() { id = 3, header = "Header 3", body = "Some Text in Post 3", author_id = "1"}, 
-            new Post() { id = 4, header = "Header 4", body = "Some Text in Post 4", author_id = "1"}, 
-            new Post() { id = 5, header = "Header 5", body = "Some Text in Post 5", author_id = "1"} 
+        private List<Post> _posts = new()
+        {
+            new() {Id = 1, Header = "Header 1", Body = "Some Text in Post 1", Author_Id = "1"},
+            new() {Id = 2, Header = "Header 2", Body = "Some Text in Post 2", Author_Id = "1"},
+            new() {Id = 3, Header = "Header 3", Body = "Some Text in Post 3", Author_Id = "1"},
+            new() {Id = 4, Header = "Header 4", Body = "Some Text in Post 4", Author_Id = "1"},
+            new() {Id = 5, Header = "Header 5", Body = "Some Text in Post 5", Author_Id = "1"}
         };
 
-        public PostController(AppDBContext context)//(IConfiguration server)
+        public PostController(AppDBContext context) //(IConfiguration server)
         {
-
             this.context = context;
             context.Database.EnsureCreated();
             //this.server = server;
@@ -64,10 +67,7 @@ namespace PostService.Controllers
         public async Task<ActionResult<Post>> Get(int id)
         {
             var list = context.posts.ToList();
-            if (list.Any())
-            {
-                return list.First(x => x.id == id);
-            }
+            if (list.Any()) return list.First(x => x.Id == id);
             return NotFound();
         }
 
@@ -81,6 +81,7 @@ namespace PostService.Controllers
                 await context.SaveChangesAsync();
                 return Ok(post);
             }
+
             //string json = JsonConvert.SerializeObject(post);
             //if (json != null)
             //{
@@ -99,6 +100,7 @@ namespace PostService.Controllers
                 await context.SaveChangesAsync();
                 return Ok(post);
             }
+
             return BadRequest();
         }
 
@@ -116,6 +118,7 @@ namespace PostService.Controllers
                     return Ok(itemToRemove);
                 }
             }
+
             //{
             //    //string json = JsonConvert.SerializeObject(posts);
             //    //System.IO.File.WriteAllText(@"data.txt", json);
@@ -127,13 +130,14 @@ namespace PostService.Controllers
         public static string HttpGet(string uri)
         {
             string content = null;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
+            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
             using (Stream stream = response.GetResponseStream())
-            using (StreamReader sr = new StreamReader(stream))
+            using (StreamReader sr = new(stream))
             {
                 content = sr.ReadToEnd();
             }
+
             return content;
         }
     }
