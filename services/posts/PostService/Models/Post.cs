@@ -1,4 +1,6 @@
-﻿namespace PostService.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PostService.Models
 {
     public class Post
     {

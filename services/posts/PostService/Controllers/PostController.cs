@@ -27,17 +27,20 @@ namespace PostService.Controllers
 
         public PostController(AppDBContext context)//(IConfiguration server)
         {
+
             this.context = context;
+            context.Database.EnsureCreated();
             //this.server = server;
             //var jsonText = System.IO.File.ReadAllText(@"data.txt");
-            //Posts = (List<Post>)JsonConvert.DeserializeObject<IList<Post>>(jsonText);
+            //posts = (List<Post>)JsonConvert.DeserializeObject<IList<Post>>(jsonText);
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await context.Posts.ToListAsync());
-            //var list = context.Posts.ToList();
+            var posts = await context.posts.ToListAsync();
+            return Ok(posts);
+            //var list = context.posts.ToList();
             //if (list.Any())
             //{
             //    return list;
@@ -46,10 +49,10 @@ namespace PostService.Controllers
             ////Database db = new Database(sql, this.server);
             ////if (db.data.HasRows)
             ////{
-            ////    Posts = new List<Post>();
+            ////    posts = new List<Post>();
             ////    while (db.data.Read())
             ////    {
-            ////        Posts.Add(new Post() { Id = (int)db.data[0], Header = db.data[1].ToString(), Body = db.data[2].ToString() , Author_Id = db.data[3].ToString() });
+            ////        posts.Add(new Post() { Id = (int)db.data[0], Header = db.data[1].ToString(), Body = db.data[2].ToString() , Author_Id = db.data[3].ToString() });
             ////    }
             ////}
             ////db.Close();
@@ -57,10 +60,10 @@ namespace PostService.Controllers
         }
 
         [HttpGet]
-        [Route("Get/{id}")]
+        [Route("/{id}")]
         public async Task<ActionResult<Post>> Get(int id)
         {
-            var list = context.Posts.ToList();
+            var list = context.posts.ToList();
             if (list.Any())
             {
                 return list.First(x => x.Id == id);
@@ -70,12 +73,11 @@ namespace PostService.Controllers
 
 
         [HttpPost]
-        [Route("Add")]
-        public async Task<ActionResult> Add(Post post)
+        public async Task<ActionResult> Add([FromBody] Post post)
         {
             if (post != null)
             {
-                context.Posts.Add(post);
+                context.posts.Add(post);
                 await context.SaveChangesAsync();
                 return Ok(post);
             }
@@ -88,23 +90,34 @@ namespace PostService.Controllers
             return BadRequest();
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] Post post)
+        {
+            if (post != null)
+            {
+                context.posts.Update(post);
+                await context.SaveChangesAsync();
+                return Ok(post);
+            }
+            return BadRequest();
+        }
+
         [HttpDelete]
-        [Route("Delete/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var list = context.Posts.ToList();
+            var list = context.posts.ToList();
             if (list.Any())
             {
-                var itemToRemove = context.Posts.First(x => x.Id == id);
+                var itemToRemove = context.posts.First(x => x.Id == id);
                 if (itemToRemove != null)
                 {
-                    context.Posts.Remove(itemToRemove);
+                    context.posts.Remove(itemToRemove);
                     await context.SaveChangesAsync();
                     return Ok(itemToRemove);
                 }
             }
             //{
-            //    //string json = JsonConvert.SerializeObject(Posts);
+            //    //string json = JsonConvert.SerializeObject(posts);
             //    //System.IO.File.WriteAllText(@"data.txt", json);
             //    return Ok();
             //}

@@ -15,7 +15,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB": "CommentPost",
+        "DB": "testcommentposts",
         "DB_USER": "postgres",
         "DB_PASSWORD": "admin",
         "DB_HOST": "localhost"
@@ -29,7 +29,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB": "CommentPost",
+        "DB": "testcommentposts",
         "DB_USER": "postgres",
         "DB_PASSWORD": "admin",
         "DB_HOST": "localhost"
