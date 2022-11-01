@@ -15,9 +15,9 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB": "postgres",
+        "DB": "testcommentposts",
         "DB_USER": "postgres",
-        "DB_PASSWORD": "1488",
+        "DB_PASSWORD": "admin",
         "DB_HOST": "localhost"
       },
       "applicationUrl": "https://localhost:7141;http://localhost:5141",
