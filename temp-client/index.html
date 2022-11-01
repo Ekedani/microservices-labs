@@ -13,15 +13,15 @@
 <main>
     <div class="request-demo">
         <div>
-            <h2 class="request-demo__header">
+            <h2 class="request-users__demo__header">
                 Users Service
             </h2>
             <p>A simple set of CRUD operations with users that will be available to the administrator. In the future,
                 endpoints will be added to allow the user to change the account</p>
         </div>
-        <div class="request-demo__main">
+        <div class="request-users__demo__main">
             <form class="user-form">
-                <div class="request-demo__method radio-form">
+                <div class="request-users__demo__method radio-form">
                     <p>Method:</p>
                     <label> GET <input type="radio" name="method" value="GET" checked> </label>
                     <label> POST <input type="radio" name="method" value="POST"> </label>
@@ -39,33 +39,53 @@
                 <label> Password: <input type="password" name="password"> </label>
                 <label> Username: <input type="text" name="username"> </label>
                 <label> Tag: <input type="text" name="tag"> </label>
-                <button type="submit" class="request-demo__send-btn USERS">Send request</button>
+                <button type="submit" class="request-users__demo__send-btn USERS">Send request</button>
             </form>
-            <div class="request-demo__result user-result">
-                <p class="request-demo__status">Status Unknown</p>
-                <textarea class="request-demo__response"></textarea>
+            <div class="request-users__demo__result user-result">
+                <p class="request-users__demo__status">Status Unknown</p>
+                <textarea class="request-users__demo__response"></textarea>
             </div>
         </div>
     </div>
 
     <div class="request-demo">
-        <div>
-            <h2 class="request-demo__header">
-                Posts Service
-            </h2>
-            <form>
-
-            </form>
+      <div>
+          <h2 class="request-posts__demo__header">
+              Posts Service
+          </h2>
+          <div class="request-users__demo__main">
+          <form class="posts-form">
+            <div class="request-posts__demo__method radio-form">
+              <p>Method:</p>
+              <label> GET <input type="radio" name="method" value="GET" checked> </label>
+              <label> POST <input type="radio" name="method" value="POST"> </label>
+              <label> PUT <input type="radio" name="method" value="PUT"> </label>
+              <label> DELETE <input type="radio" name="method" value="DELETE"> </label>
+            </div>
+            <p>Request params:</p>
+            <label> ID: <input type="text" name="id" placeholder="Leave empty if don't need"> </label>
+            <label> Header: <input name="header"> </label>
+            <label> Body: <input name="body"> </label>
+            <label> Author ID: <input name="author_id"> </label>
+            <button type="submit" class="request-posts__demo__send-btn">Send request</button>
+          </form>
+          <div class="request-posts__demo__result user-result">
+            <p class="request-posts__demo__status">Status Unknown</p>
+            <textarea class="request-posts__demo__response"></textarea>
+          </div>
+          </div>
         </div>
-    </div>
+      </div>
+  </div>
 
     <div class="request-demo">
         <div>
-            <h2 class="request-demo__header">
+            <h2 class="request-comments__demo__header">
                 Comments Service
             </h2>
-            <form class="comment-form">
-              <div class="request-demo__method radio-form">
+            <div class="request-comments__demo__main">
+            <form class="comments-form">
+              <div class="request-comments__demo__method radio-form">
                   <p>Method:</p>
                   <label> GET <input type="radio" name="method" value="GET" checked> </label>
                   <label> POST <input type="radio" name="method" value="POST"> </label>
@@ -77,11 +97,19 @@
               <label> Body: <input name="body"> </label>
               <label> Post ID: <input name="post_id"> </label>
               <label> Author ID: <input name="author_id"> </label>
-              <button type="submit" class="request-demo__send-btn COMMENTS">Send request</button>
+              <button type="submit" class="request-comments__demo__send-btn">Send request</button>
             </form>
+            <div class="request-comments__demo__result user-result">
+              
+              <p class="request-comments__demo__status">Status Unknown</p>
+              <textarea class="request-comments__demo__response"></textarea>
+          </div>
+        </div>
         </div>
     </div>
 </main>
-<script type="text/javascript" src="index.js"></script>
 </body>
+<script type="text/javascript" src="scripts/users.js"></script>
+<script type="text/javascript" src="scripts/posts.js"></script>
+<script type="text/javascript" src="scripts/commets.js"></script>
 </html>

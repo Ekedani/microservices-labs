@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: feed-postgres
+  name: posts-postgres
   labels:
-    app: feed-postgres
+    app: posts-postgres
 spec:
   ports:
     - port: 5432
   selector:
-    app: feed-postgres
+    app: posts-postgres

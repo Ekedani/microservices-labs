@@ -18,11 +18,11 @@ namespace PostService.Controllers
 
         private List<Post> Posts = new List<Post>() 
         { 
-            new Post() { Id = 1, Header = "Header 1", Body = "Some Text in Post 1", Author_Id = "1" }, 
-            new Post() { Id = 2, Header = "Header 2", Body = "Some Text in Post 2", Author_Id = "1" }, 
-            new Post() { Id = 3, Header = "Header 3", Body = "Some Text in Post 3", Author_Id = "1"}, 
-            new Post() { Id = 4, Header = "Header 4", Body = "Some Text in Post 4", Author_Id = "1"}, 
-            new Post() { Id = 5, Header = "Header 5", Body = "Some Text in Post 5", Author_Id = "1"} 
+            new Post() { id = 1, header = "Header 1", body = "Some Text in Post 1", author_id = "1" }, 
+            new Post() { id = 2, header = "Header 2", body = "Some Text in Post 2", author_id = "1" }, 
+            new Post() { id = 3, header = "Header 3", body = "Some Text in Post 3", author_id = "1"}, 
+            new Post() { id = 4, header = "Header 4", body = "Some Text in Post 4", author_id = "1"}, 
+            new Post() { id = 5, header = "Header 5", body = "Some Text in Post 5", author_id = "1"} 
         };
 
         public PostController(AppDBContext context)//(IConfiguration server)
@@ -66,7 +66,7 @@ namespace PostService.Controllers
             var list = context.posts.ToList();
             if (list.Any())
             {
-                return list.First(x => x.Id == id);
+                return list.First(x => x.id == id);
             }
             return NotFound();
         }

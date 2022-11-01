@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-deployment
+  name: users-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: posts
+      app: users
   template:
     metadata:
      labels:
-       app: posts
+       app: users
     spec:
       initContainers:
         - name: run-migrations
-          image: alexeyformicrolab/posts-migrations:0.1.1
+          image: ekedani/users-migrations:0.1
           imagePullPolicy: IfNotPresent 
           command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
           env:
             - name: POSTGRESQL_URL
-              value: "postgres://postgres:whereismymind@feed-postgres:5432/postgres?sslmode=disable"
+              value: "postgres://postgres:whereismymind@users-postgres:5432/postgres?sslmode=disable"
             - name: VERSION
-              value: "20221023185401"     
+              value: "20221022132417"    
       containers:
-        - image: alexeyformicrolab/posts:0.1 
+        - image: ekedani/users:0.1.2 
           imagePullPolicy: IfNotPresent 
-          name: posts 
+          name: users 
           ports:
-            - containerPort: 80 
+            - containerPort: 3000 
           envFrom:
             - configMapRef:
-                name: posts-config
+                name: users-config
             - secretRef:
-                name: posts-secret
+                name: users-secret

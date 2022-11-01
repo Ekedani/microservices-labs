@@ -1,32 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: feed-postgres
+  name: posts-postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: feed-postgres
+      app: posts-postgres
   template:
     metadata:
       labels:
-        app: feed-postgres
+        app: posts-postgres
     spec:
       containers:
-        - name: feed-postgres
-          image: postgres:14.1-alpine3.15 
+        - name: posts-postgres
+          image: postgres:14.1-alpine3.15
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
           envFrom:
             - configMapRef:
-                name: feed-postgres-config
+                name: posts-postgres-config
             - secretRef:
-                name: feed-postgres-secret
+                name: posts-postgres-secret
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: feedpostgredb
+              name: postpostgredb
       volumes:
-        - name: feedpostgredb
+        - name: postpostgredb
           persistentVolumeClaim:
-            claimName: feed-postgres-volume-claim
+            claimName: posts-postgres-volume-claim

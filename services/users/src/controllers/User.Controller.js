@@ -62,20 +62,18 @@ const UserController = {
     async updateUserById(req, res, next) {
         try {
             const {id} = req.params;
-            const result = await User.update({
+            const user = await User.findByPk(id);
+            if (!user) {
+                throw createError(404, NOT_FOUND_MSG);
+            }
+            await user.update({
                 role: req.body.role,
                 email: req.body.email,
                 password: req.body.password,
                 username: req.body.username,
                 tag: req.body.tag
-            }, {
-                where: {id: id},
-                returning: true,
-            });
-            if (!result[0]) {
-                throw createError(404, NOT_FOUND_MSG);
-            }
-            res.send(result[1]);
+            })
+            res.send(user);
         } catch (err) {
             next(err);
         }

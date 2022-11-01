@@ -67,9 +67,17 @@ const User = sequelize.define('User', {
     timestamps: false
 });
 
-User.afterValidate(user => {
+User.beforeCreate(user => {
     const SALT_ROUNDS = 10;
     user.password = hashSync(user.password, SALT_ROUNDS);
+});
+
+User.beforeUpdate((user, options) => {
+    options.validate = false;
+    const SALT_ROUNDS = 10;
+    if(options.fields.includes('password')){
+        user.password = hashSync(user.password, SALT_ROUNDS);
+    }
 });
 
 export default User;

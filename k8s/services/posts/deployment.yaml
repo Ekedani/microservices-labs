@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts
+  template:
+    metadata:
+     labels:
+       app: posts
+    spec: 
+      containers:
+        - image: alexeyformicrolab/posts:0.1.4
+          imagePullPolicy: IfNotPresent 
+          name: posts 
+          ports:
+            - containerPort: 80 
+          envFrom:
+            - configMapRef:
+                name: posts-config
+            - secretRef:
+                name: posts-secret

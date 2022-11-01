@@ -1,10 +1,10 @@
-const userForm = document.querySelector('.user-form')
-const userBtn = userForm.querySelector('.request-demo__send-btn')
+const userForm = document.querySelector('.user-form');
+const userBtn = userForm.querySelector('.request-users__demo__send-btn');
 
 userBtn.addEventListener('click', async (event) => {
     event.preventDefault();
-    const responseStatus = document.querySelector('.request-demo__status')
-    const response = document.querySelector('.request-demo__response')
+    const responseStatus = document.querySelector('.request-users__demo__status')
+    const response = document.querySelector('.request-users__demo__response')
 
     const formData = {};
     for (let number = 0; number < userForm.elements.length - 1; number++) {
@@ -25,19 +25,19 @@ userBtn.addEventListener('click', async (event) => {
         switch (method) {
             case 'GET':
                 if (id.length === 0) {
-                    res = await fetch('http://localhost/api/users', {
+                    res = await fetch('/api/users', {
                         method: 'GET',
                     });
                     result = await res.json();
                 } else {
-                    res = await fetch(`http://localhost/api/users/${id}`, {
+                    res = await fetch(`/api/users/${id}`, {
                         method: 'GET',
                     });
                     result = await res.json();
                 }
                 break;
             case 'POST':
-              res = await fetch(`http://localhost/api/users`, {
+              res = await fetch(`/api/users`, {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/x-www-form-urlencoded'
@@ -53,7 +53,7 @@ userBtn.addEventListener('click', async (event) => {
                 body.append(value[0], value[1]);
               }
               console.log(Array.from(body));
-              res = await fetch(`http://localhost/api/users/${id}`, {
+              res = await fetch(`/api/users/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -63,7 +63,7 @@ userBtn.addEventListener('click', async (event) => {
               result = await res.json();
               break;
             case 'DELETE':
-                res = await fetch(`http://localhost/api/users/${id}`, {
+                res = await fetch(`/api/users/${id}`, {
                     method: 'DELETE',
                 });
                 result = res;
