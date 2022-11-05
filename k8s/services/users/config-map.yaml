@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: users-config
 data:
-  DB: postgres
+  DB: users_db
   DB_HOST: users-postgres
