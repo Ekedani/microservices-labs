@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: posts-postgres-config
 data:
-  POSTGRES_DB: postgres
+  POSTGRES_DB: posts_db
