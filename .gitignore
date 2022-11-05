@@ -6,3 +6,4 @@ obj
 node_modules
 services/users/data.json
 client/build
+.DS_store
