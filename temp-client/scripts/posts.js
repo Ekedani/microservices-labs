@@ -19,8 +19,7 @@ postsBtn.addEventListener('click', async (event) => {
     delete formData.method;
     delete formData.id;
 
-    let body = new URLSearchParams(formData);
-    let res, result;
+    let res, result, body;
     try {
         switch (method) {
             case 'GET':
@@ -37,12 +36,33 @@ postsBtn.addEventListener('click', async (event) => {
                 }
                 break;
             case 'POST':
+              body = {
+                "body": formData.body,
+                "header": formData.header,
+                "author_id": formData.author_id,
+              }
               res = await fetch(`/api/posts`, {
                   method: 'POST',
                   headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded'
+                      'Content-Type': 'application/json'
                   },
-                  body: body
+                  body
+              });
+              result = await res.json();
+                break;
+            case 'PUT':
+              body = {
+                "id": formData.id,
+                "body": formData.body,
+                "header": formData.header,
+                "author_id": formData.author_id,
+              }
+              res = await fetch(`/api/posts`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body
               });
               result = await res.json();
                 break;
