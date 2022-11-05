@@ -12,7 +12,7 @@
     "PostService": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "api/posts",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DB": "testcommentposts",
@@ -26,7 +26,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "api/posts",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DB": "testcommentposts",
