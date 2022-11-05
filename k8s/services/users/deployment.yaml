@@ -19,7 +19,7 @@ spec:
           command: ["migrate", "-path", "/migrations", "-database",  "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
           env:
             - name: POSTGRESQL_URL
-              value: "postgres://postgres:whereismymind@users-postgres:5432/postgres?sslmode=disable"
+              value: "postgres://postgres:whereismymind@users-postgres:5432/users_db?sslmode=disable"
             - name: VERSION
               value: "20221022132417"    
       containers:
