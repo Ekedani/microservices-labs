@@ -30,7 +30,7 @@ postsBtn.addEventListener('click', async (event) => {
                     });
                     result = await res.json();
                 } else {
-                    res = await fetch(`/api/posts/${id}`, {
+                    res = await fetch(`/api/posts?id=${id}`, {
                         method: 'GET',
                     });
                     result = await res.json();
@@ -47,7 +47,7 @@ postsBtn.addEventListener('click', async (event) => {
               result = await res.json();
                 break;
             case 'DELETE':
-                res = await fetch(`/api/posts/${id}`, {
+                res = await fetch(`/api/posts?id=${id}`, {
                     method: 'DELETE',
                 });
                 result = res;
