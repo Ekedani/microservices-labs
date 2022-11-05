@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using PostService.Models;
-using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PostService.Data;
+using PostService.Models;
 
 namespace PostService.Controllers
 {
@@ -18,20 +13,11 @@ namespace PostService.Controllers
     public class PostController : ControllerBase
     {
         //public IConfiguration server;
-        private readonly AppDBContext context;
-
-        private List<Post> _posts = new()
-        {
-            new() {Id = 1, Header = "Header 1", Body = "Some Text in Post 1", Author_Id = "1"},
-            new() {Id = 2, Header = "Header 2", Body = "Some Text in Post 2", Author_Id = "1"},
-            new() {Id = 3, Header = "Header 3", Body = "Some Text in Post 3", Author_Id = "1"},
-            new() {Id = 4, Header = "Header 4", Body = "Some Text in Post 4", Author_Id = "1"},
-            new() {Id = 5, Header = "Header 5", Body = "Some Text in Post 5", Author_Id = "1"}
-        };
+        private readonly AppDBContext _context;
 
         public PostController(AppDBContext context) //(IConfiguration server)
         {
-            this.context = context;
+            this._context = context;
             context.Database.EnsureCreated();
             //this.server = server;
             //var jsonText = System.IO.File.ReadAllText(@"data.txt");
@@ -41,7 +27,7 @@ namespace PostService.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var posts = await context.posts.ToListAsync();
+            var posts = await _context.posts.ToListAsync();
             return Ok(posts);
             //var list = context.posts.ToList();
             //if (list.Any())
@@ -63,10 +49,10 @@ namespace PostService.Controllers
         }
 
         [HttpGet]
-        [Route("/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<Post>> Get(int id)
         {
-            var list = context.posts.ToList();
+            var list = _context.posts.ToList();
             if (list.Any()) return list.First(x => x.Id == id);
             return NotFound();
         }
@@ -77,8 +63,8 @@ namespace PostService.Controllers
         {
             if (post != null)
             {
-                context.posts.Add(post);
-                await context.SaveChangesAsync();
+                _context.posts.Add(post);
+                await _context.SaveChangesAsync();
                 return Ok(post);
             }
 
@@ -96,8 +82,8 @@ namespace PostService.Controllers
         {
             if (post != null)
             {
-                context.posts.Update(post);
-                await context.SaveChangesAsync();
+                _context.posts.Update(post);
+                await _context.SaveChangesAsync();
                 return Ok(post);
             }
 
@@ -105,16 +91,17 @@ namespace PostService.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var list = context.posts.ToList();
+            var list = _context.posts.ToList();
             if (list.Any())
             {
-                var itemToRemove = context.posts.First(x => x.Id == id);
+                var itemToRemove = _context.posts.First(x => x.Id == id);
                 if (itemToRemove != null)
                 {
-                    context.posts.Remove(itemToRemove);
-                    await context.SaveChangesAsync();
+                    _context.posts.Remove(itemToRemove);
+                    await _context.SaveChangesAsync();
                     return Ok(itemToRemove);
                 }
             }
@@ -125,20 +112,6 @@ namespace PostService.Controllers
             //    return Ok();
             //}
             return NotFound();
-        }
-
-        public static string HttpGet(string uri)
-        {
-            string content = null;
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
-            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader sr = new(stream))
-            {
-                content = sr.ReadToEnd();
-            }
-
-            return content;
         }
     }
 }
