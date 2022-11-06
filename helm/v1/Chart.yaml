@@ -8,8 +8,8 @@ dependencies:
   - name: postgresql
     version: 10.16.2
     repository: https://charts.bitnami.com/bitnami
-    alias: users-postgresql
+    alias: users-postgres
   - name: postgresql
     version: 10.16.2
     repository: https://charts.bitnami.com/bitnami
-    alias: posts-postgresql
+    alias: posts-postgres

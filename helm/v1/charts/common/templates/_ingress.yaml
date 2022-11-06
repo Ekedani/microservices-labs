@@ -25,6 +25,6 @@ spec:
               service:
                 name: {{ include "common.fullname" . }}
                 port:
-                  name: {{ .Values.ingress.port }}
+                  number: {{ .Values.ingress.port }}
 {{- end -}}
 {{- end -}}
