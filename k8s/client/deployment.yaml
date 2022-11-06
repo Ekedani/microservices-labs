@@ -13,7 +13,7 @@ spec:
        app: client
     spec:
       containers:
-        - image: hxnchar/temp-client:0.1  
+        - image: hxnchar/temp-client:0.5
           imagePullPolicy: IfNotPresent 
           name: client 
           ports:
