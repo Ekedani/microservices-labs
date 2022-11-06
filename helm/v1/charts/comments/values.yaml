@@ -1,22 +1,14 @@
 image:
-  name: ekedani/users
+  name: hxnchar/comments
   tag: 0.1.2
 
-migrations:
-  image:
-    name: ekedani/users-migrations
-    tag: 0.1
-  config:
-    POSTGRESQL_URL: "postgres://postgres:whereismymind@users-postgres:5432/users_db?sslmode=disable"
-    VERSION: "20221022132417"
-
 configs:
-  POSTGRES_DB: users_db
-  POSTGRES_HOST: users-postgres
+  POSTGRES_DB: posts_db
+  POSTGRES_HOST: posts-postgres
 
 secrets:
   POSTGRES_USER: "cG9zdGdyZXM="
-  POSTGRES_PASSWORD: "d2hlcmVpc215bWluZA=="
+  POSTGRES_PASSWORD: "cG9zdHNwYXNzd29yZA=="
 
 service:
   ports:
@@ -25,7 +17,6 @@ service:
       containerPort: 3000
 
 ingress:
-  path: /api/users
+  use_regex: "true"
+  path: /api/posts/[a-zA-Z0-9_.-]*/comments
   port: 80
-  annotations:
-    
