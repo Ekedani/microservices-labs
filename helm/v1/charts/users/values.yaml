@@ -11,12 +11,12 @@ migrations:
     VERSION: "20221022132417"
 
 configs:
-  POSTGRES_DB: users_db
-  POSTGRES_HOST: users-postgres
+  DB: users_db
+  DB_HOST: users-postgres
 
 secrets:
-  POSTGRES_USER: "cG9zdGdyZXM="
-  POSTGRES_PASSWORD: "d2hlcmVpc215bWluZA=="
+  DB_USER: "cG9zdGdyZXM="
+  DB_PASSWORD: "d2hlcmVpc215bWluZA=="
 
 service:
   ports:
