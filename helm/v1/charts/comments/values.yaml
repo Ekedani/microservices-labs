@@ -1,0 +1,31 @@
+image:
+  name: ekedani/users
+  tag: 0.1.2
+
+migrations:
+  image:
+    name: ekedani/users-migrations
+    tag: 0.1
+  config:
+    POSTGRESQL_URL: "postgres://postgres:whereismymind@users-postgres:5432/users_db?sslmode=disable"
+    VERSION: "20221022132417"
+
+configs:
+  POSTGRES_DB: users_db
+  POSTGRES_HOST: users-postgres
+
+secrets:
+  POSTGRES_USER: "cG9zdGdyZXM="
+  POSTGRES_PASSWORD: "d2hlcmVpc215bWluZA=="
+
+service:
+  ports:
+    - name: http
+      port: 80
+      containerPort: 3000
+
+ingress:
+  path: /api/users
+  port: 80
+  annotations:
+    
