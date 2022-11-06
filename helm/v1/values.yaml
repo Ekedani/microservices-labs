@@ -1,0 +1,16 @@
+users-postgresql:
+  fullnameOverride: users-postgres
+  postgresqlDatabase: "users_db"
+  postgresqlUsername: "postgres"
+  postgresqlPassword: "whereismymind"
+  persistence:
+    size: 1Gi
+    mountPath: /var/lib/postgresql/data  
+posts-postgresql:
+  fullnameOverride: posts-postgres
+  postgresqlDatabase: "posts_db"
+  postgresqlUsername: "postgres"
+  postgresqlPassword: "postspassword"
+  persistence:
+    size: 1Gi
+    mountPath: /var/lib/postgresql/data
