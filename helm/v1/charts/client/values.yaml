@@ -10,5 +10,4 @@ service:
 
 ingress:
   path: /
-  port: http
-  # SPECIFY NUMBER HERE
+  port: 80
