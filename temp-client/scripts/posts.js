@@ -36,11 +36,11 @@ postsBtn.addEventListener('click', async (event) => {
                 }
                 break;
             case 'POST':
-              body = {
+              body = JSON.stringify({
                 "body": formData.body,
                 "header": formData.header,
                 "author_id": formData.author_id,
-              }
+              });
               res = await fetch(`/api/posts`, {
                   method: 'POST',
                   headers: {
@@ -51,12 +51,12 @@ postsBtn.addEventListener('click', async (event) => {
               result = await res.json();
                 break;
             case 'PUT':
-              body = {
+              body = JSON.stringify({
                 "id": formData.id,
                 "body": formData.body,
                 "header": formData.header,
                 "author_id": formData.author_id,
-              }
+              });
               res = await fetch(`/api/posts`, {
                   method: 'PUT',
                   headers: {
