@@ -3,8 +3,8 @@ const postsBtn = postsForm.querySelector('.request-posts__demo__send-btn');
 
 postsBtn.addEventListener('click', async (event) => {
     event.preventDefault();
-    const responseStatus = document.querySelector('.request-users__demo__status')
-    const response = document.querySelector('.request-users__demo__response')
+    const responseStatus = document.querySelector('.request-posts__demo__status')
+    const response = document.querySelector('.request-posts__demo__response')
 
     const formData = {};
     for (let number = 0; number < postsForm.elements.length - 1; number++) {
@@ -29,7 +29,7 @@ postsBtn.addEventListener('click', async (event) => {
                     });
                     result = await res.json();
                 } else {
-                    res = await fetch(`/api/posts?id=${id}`, {
+                    res = await fetch(`/api/posts/${id}`, {
                         method: 'GET',
                     });
                     result = await res.json();
@@ -58,7 +58,7 @@ postsBtn.addEventListener('click', async (event) => {
                 "author_id": formData.author_id,
               }
               res = await fetch(`/api/posts`, {
-                  method: 'POST',
+                  method: 'PUT',
                   headers: {
                     'Content-Type': 'application/json'
                   },
@@ -67,7 +67,7 @@ postsBtn.addEventListener('click', async (event) => {
               result = await res.json();
                 break;
             case 'DELETE':
-                res = await fetch(`/api/posts?id=${id}`, {
+                res = await fetch(`/api/posts/${id}`, {
                     method: 'DELETE',
                 });
                 result = res;
