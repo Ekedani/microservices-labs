@@ -1,7 +1,9 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using PostService.Data;
 using PostService.Models;
-using System.Net;
 
 namespace PostService.Controllers
 {
@@ -10,44 +12,62 @@ namespace PostService.Controllers
     [Route("api/posts")]
     public class PostController : ControllerBase
     {
-        private List<Post> Posts = new List<Post>() 
-        { 
-            new Post() { Id = 1, Header = "Header 1", Body = "Some Text in Post 1", Author_Id = "1", Tag = "tag", Username = "username1" }, 
-            new Post() { Id = 2, Header = "Header 2", Body = "Some Text in Post 2", Author_Id = "1", Tag = "tag", Username = "username1" }, 
-            new Post() { Id = 3, Header = "Header 3", Body = "Some Text in Post 3", Author_Id = "1", Tag = "tag", Username = "username1" }, 
-            new Post() { Id = 4, Header = "Header 4", Body = "Some Text in Post 4", Author_Id = "1", Tag = "tag", Username = "username1" }, 
-            new Post() { Id = 5, Header = "Header 5", Body = "Some Text in Post 5", Author_Id = "1", Tag = "tag", Username = "username1" } 
-        };
+        //public IConfiguration server;
+        private readonly AppDBContext _context;
 
-        public PostController()
+        public PostController(AppDBContext context) //(IConfiguration server)
         {
+            this._context = context;
+            context.Database.EnsureCreated();
+            //this.server = server;
             //var jsonText = System.IO.File.ReadAllText(@"data.txt");
-            //Posts = (List<Post>)JsonConvert.DeserializeObject<IList<Post>>(jsonText);
+            //posts = (List<Post>)JsonConvert.DeserializeObject<IList<Post>>(jsonText);
         }
 
         [HttpGet]
-        public IEnumerable<Post> Get()
+        public async Task<IActionResult> Get()
         {
-            return Posts.ToArray();
+            var posts = await _context.posts.ToListAsync();
+            return Ok(posts);
+            //var list = context.posts.ToList();
+            //if (list.Any())
+            //{
+            //    return list;
+            //}
+            ////String sql = "SELECT id, header, body, author_id FROM Post";
+            ////Database db = new Database(sql, this.server);
+            ////if (db.data.HasRows)
+            ////{
+            ////    posts = new List<Post>();
+            ////    while (db.data.Read())
+            ////    {
+            ////        posts.Add(new Post() { Id = (int)db.data[0], Header = db.data[1].ToString(), Body = db.data[2].ToString() , Author_Id = db.data[3].ToString() });
+            ////    }
+            ////}
+            ////db.Close();
+            //return new List<Post>();
         }
 
         [HttpGet]
-        [Route("Get/{id}")]
-        public Post Get(int id)
+        [Route("{id}")]
+        public async Task<ActionResult<Post>> Get(int id)
         {
-            return Posts.ToArray().First(x=>x.Id == id);
+            var list = _context.posts.ToList();
+            if (list.Any()) return list.First(x => x.Id == id);
+            return NotFound();
         }
 
 
         [HttpPost]
-        [Route("Add")]
-        public async Task<ActionResult<Post>> Add(Post post)
+        public async Task<ActionResult> Add([FromBody] Post post)
         {
             if (post != null)
             {
-                Posts.Add(post);
+                _context.posts.Add(post);
+                await _context.SaveChangesAsync();
                 return Ok(post);
             }
+
             //string json = JsonConvert.SerializeObject(post);
             //if (json != null)
             //{
@@ -57,30 +77,41 @@ namespace PostService.Controllers
             return BadRequest();
         }
 
-        [HttpDelete]
-        [Route("Delete/{id}")]
-        public async Task<ActionResult<Post>> Delete(int id)
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] Post post)
         {
-            if (Posts.Remove(Posts.First(x => x.Id == id)))
+            if (post != null)
             {
-                //string json = JsonConvert.SerializeObject(Posts);
-                //System.IO.File.WriteAllText(@"data.txt", json);
-                return Ok();
+                _context.posts.Update(post);
+                await _context.SaveChangesAsync();
+                return Ok(post);
             }
+
             return BadRequest();
         }
 
-        public static string HttpGet(string uri)
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            string content = null;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader sr = new StreamReader(stream))
+            var list = _context.posts.ToList();
+            if (list.Any())
             {
-                content = sr.ReadToEnd();
+                var itemToRemove = _context.posts.First(x => x.Id == id);
+                if (itemToRemove != null)
+                {
+                    _context.posts.Remove(itemToRemove);
+                    await _context.SaveChangesAsync();
+                    return Ok(itemToRemove);
+                }
             }
-            return content;
+
+            //{
+            //    //string json = JsonConvert.SerializeObject(posts);
+            //    //System.IO.File.WriteAllText(@"data.txt", json);
+            //    return Ok();
+            //}
+            return NotFound();
         }
     }
 }

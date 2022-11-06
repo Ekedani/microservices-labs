@@ -1,0 +1,22 @@
+image:
+  name: hxnchar/comments
+  tag: 0.1.2
+
+configs:
+  POSTGRES_DB: posts_db
+  POSTGRES_HOST: posts-postgres
+
+secrets:
+  POSTGRES_USER: "cG9zdGdyZXM="
+  POSTGRES_PASSWORD: "cG9zdHNwYXNzd29yZA=="
+
+service:
+  ports:
+    - name: http
+      port: 80
+      containerPort: 3000
+
+ingress:
+  use_regex: "true"
+  path: /api/posts/[a-zA-Z0-9_.-]*/comments
+  port: 80

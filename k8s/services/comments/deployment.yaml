@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments
+  template:
+    metadata:
+     labels:
+       app: comments
+    spec:
+      containers:
+        - image: hxnchar/comments:0.1.2 
+          imagePullPolicy: IfNotPresent 
+          name: comments 
+          ports:
+            - containerPort: 3000 
+          envFrom:
+            - configMapRef:
+                name: comments-config
+            - secretRef:
+                name: comments-secret

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: posts-config
+data:
+  DB: posts_db
+  DB_HOST: posts-postgres

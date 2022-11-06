@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', commentRouter);
 
 app.use((req, res, next) => {
-    next(createError(404, 'Not found'));
+    next(createError(404, 'Route not found'));
 });
 
 app.use((err, req, res, next) => {

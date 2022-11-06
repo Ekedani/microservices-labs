@@ -1,0 +1,15 @@
+apiVersion: v2
+type: application
+version: 0.0.5
+name: blog
+appVersion: "0.1"
+description: "Our blog application"
+dependencies:
+  - name: postgresql
+    version: 10.16.2
+    repository: https://charts.bitnami.com/bitnami
+    alias: users-postgresql
+  - name: postgresql
+    version: 10.16.2
+    repository: https://charts.bitnami.com/bitnami
+    alias: posts-postgresql

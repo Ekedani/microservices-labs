@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "http-errors": "^2.0.0",
+    "pg": "^8.8.0",
+    "sequelize": "^6.25.3"
+  }
+}

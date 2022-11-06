@@ -43,7 +43,6 @@ export const PostModal = ({postID, authorID}) => {
           }
         </div>
         <span>🕐 {timeToRead}min</span>
-        <button onClick={deletePost}>Delete</button>
       </div>
     )
 }

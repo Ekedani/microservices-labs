@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-postgres
+  template:
+    metadata:
+      labels:
+        app: posts-postgres
+    spec:
+      containers:
+        - name: posts-postgres
+          image: postgres:14.1-alpine3.15
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: posts-postgres-config
+            - secretRef:
+                name: posts-postgres-secret
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postpostgredb
+      volumes:
+        - name: postpostgredb
+          persistentVolumeClaim:
+            claimName: posts-postgres-volume-claim

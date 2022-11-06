@@ -1,107 +1,83 @@
-// I'll use Sequelize in the next lab here
-import { promises as fs } from "fs";
-import { fileURLToPath } from 'url';
-import { dirname, resolve } from "path";
-import { randomUUID } from 'crypto'
-import createError from "http-errors";
+import {DataTypes, Sequelize} from 'sequelize';
+import {hashSync} from 'bcrypt';
+import config from "../../database/config.js";
 
-// Just temporary, to prove that it works (I know it looks awful)
-const __filename = fileURLToPath(import.meta.url);
-const dataPath = process.env.DATA_PATH ?? resolve(dirname(__filename), "../../data.json")
+const sequelize = new Sequelize(config.database, config.user, config.password, {
+    host: config.host,
+    dialect: config.dialect
+});
 
-class User {
-    constructor({ role, email, password, username, tag} = {
-        role: null,
-        email: null,
-        password: null,
-        username: null,
-        tag: null
-    }) {
-        this.id = randomUUID();
-        this.role = role;
-        this.email = email;
-        this.password = password;
-        this.username = username;
-        this.tag = tag;
-    }
-
-    static async save(user) {
-        try {
-            const data = await fs.readFile(dataPath, 'utf-8');
-            const newData = JSON.parse(data);
-            newData.users.push(user);
-            await fs.writeFile(dataPath, JSON.stringify(newData), 'utf-8')
-            return newData.users[newData.users.length - 1];
-        } catch (err) {
-            createError(500, err.message)
-        }
-    }
-
-    static async getAll() {
-        try {
-            const result = await fs.readFile(dataPath, 'utf-8');
-            return JSON.parse(result);
-        } catch (err) {
-            createError(500, err.message)
-        }
-    }
-
-    static async findById(id) {
-        try {
-            const data = await fs.readFile(dataPath, 'utf-8')
-            const jsonData = JSON.parse(data);
-            const index = jsonData.users.map((x) => { return x.id; }).indexOf(id);
-            if(index === -1) {
-                return null;
-            } else {
-                return jsonData.users[index];
+const User = sequelize.define('User', {
+    role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            isIn: {
+                args: [['admin', 'user']],
+                msg: 'Role doesn\'t exist'
             }
-        } catch (err) {
-            createError(500, err.message)
         }
-    }
-
-    static async updateById(id, user) {
-        try {
-            const data = await fs.readFile(dataPath, 'utf-8');
-            const newData = JSON.parse(data);
-            const index = newData.users.map((x) => {return x.id;}).indexOf(id);
-            if(index === -1) {
-                return null;
-            } else {
-                newData.users[index] = {
-                    id:  newData.users[index].id,
-                    role: user.role ?? newData.users[index].role,
-                    email: user.email ?? newData.users[index].email,
-                    password: user.password ?? newData.users[index].password,
-                    username: user.username ?? newData.users[index].username,
-                    tag: user.tag ?? newData.users[index].tag
-                };
-                await fs.writeFile(dataPath, JSON.stringify(newData), 'utf-8');
-                return newData.users[index];
+    },
+    email: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+        validate: {
+            isEmail: {
+                msg: "Invalid email"
             }
-        } catch (err) {
-            createError(500, err.message)
         }
-    }
-
-    static async deleteById(id) {
-        try {
-            const data = await fs.readFile(dataPath, 'utf-8');
-            const newData = JSON.parse(data);
-            const index = newData.users.map((x) => { return x.id; }).indexOf(id);
-            if(index === -1) {
-                return null;
-            } else {
-                const result = newData.users[index];
-                newData.users.splice(index, 1);
-                await fs.writeFile(dataPath, JSON.stringify(newData), 'utf-8')
-                return result;
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            len: {
+                args: [8, 30],
+                msg: 'Password must be between 8 and 30 characters in length'
             }
-        } catch (err) {
-            createError(500, err.message)
+        }
+    },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            len: {
+                args: [3, 30],
+                msg: 'Username must be between 3 and 30 characters in length'
+            }
+        }
+    },
+    tag: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+            len: {
+                args: [3, 15],
+                msg: 'Tag must be between 3 and 30 characters in length'
+            },
+            isAlphanumeric: {
+                msg: 'Tag can contain only alphanumeric characters'
+            }
         }
     }
-}
+}, {
+    tableName: 'users',
+    timestamps: false
+});
+
+User.beforeCreate(user => {
+    const SALT_ROUNDS = 10;
+    user.password = hashSync(user.password, SALT_ROUNDS);
+});
+
+User.beforeUpdate((user, options) => {
+    options.validate = false;
+    const SALT_ROUNDS = 10;
+    if(options.fields.includes('password')){
+        user.password = hashSync(user.password, SALT_ROUNDS);
+    }
+});
 
 export default User;

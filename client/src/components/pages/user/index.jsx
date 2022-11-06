@@ -6,36 +6,21 @@ import { PostModal } from '../../common/post-modal';
 export const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState({});
-  // let user = {
-  //   role: 'user',
-  //   email: 'user123@gmail.com',
-  //   username: 'username',
-  //   tag: 'userprikolist123',
-  //   posts: [
-  //     {
-  //       header: 'Header 1',
-  //       body: 'Some text for blog 1',
-  //     },
-  //     {
-  //       header: 'Header 2',
-  //       body: 'Some text for blog 2',
-  //     },
-  //     {
-  //       header: 'Header 3',
-  //       body: 'Some text for blog 3',
-  //     }
-  //   ],
-  // };
   const openPost = () => {
     //TODO redirect
     console.log('123');
   }
   
-  useEffect(() => {async function fetchUser () {
-    const response = await axios.get(`/api/users/${id}`);
-    setUser(response);
-  } 
-  });  
+  useEffect(() => {
+    const fetchUser = async () => {
+      await axios.get(`http://localhost:80/api/users/${id}`, {
+        mode: 'no-cors',
+      })
+        .then(data => setUser(data));
+    }
+    fetchUser();
+  }, []);
+
   return (
       <div className={styles.container}>
         <h1 className={styles.username}>{user.username}</h1>

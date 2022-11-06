@@ -7,37 +7,23 @@ export const UsersPage = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {async function fetchUsers () {
-      const res = await axios.get('/api/users');
-      setUsers(res);
-    }
-  });
+  useEffect(() => {
+      const fetchUsers = async () => {
+        await axios.get(`http://localhost:80/api/users`, {
+          mode: 'no-cors',
+        })
+          .then(data => setUsers(data));
+      }
+      fetchUsers();
+  }, []);
+
   const openUserInfo = async (userID) => {
     navigate(`/api/users/${userID}`);
   }
-  const createNewUser = async () => {
-    const tag = prompt('Enter your tag'),
-      nickname = prompt('Enter your nickname'),
-      email = prompt('Enter your email'),
-      password = prompt('Enter your password'),
-      role = prompt('Enter your role');
-    const req = await JSON.stringify({
-      tag,
-      nickname,
-      email,
-      password,
-      role,
-    });
-    await axios.post('/api/users', req);
-  }
+  
   return (
       <div className={styles.container}>
-         <h1>List of users</h1>
-        <div className={styles.newUser}>
-          <h3>Not enough users?</h3>
-          <button onClick={createNewUser}>Create</button>
-        </div>
-        
+        <h1>List of the most active users</h1>
         <hr />
         {
           users.length > 0 ?
