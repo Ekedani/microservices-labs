@@ -12,8 +12,8 @@ metadata:
   name: {{ include "common.fullname" . }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    {{- range $key, $value := .Values.annotations }}
-      {{ $key }}: {{ $value | quote }}
+    {{- if eq .Values.ingress.use_regex "true" }}
+    nginx.ingress.kubernetes.io/use-regex: "true"
     {{- end }}
 spec:
   rules:
@@ -25,6 +25,6 @@ spec:
               service:
                 name: {{ include "common.fullname" . }}
                 port:
-                  name: {{ .Values.ingress.port }}
+                  number: {{ .Values.ingress.port }}
 {{- end -}}
 {{- end -}}

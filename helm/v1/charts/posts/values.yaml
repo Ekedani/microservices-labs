@@ -1,0 +1,21 @@
+image:
+  name: alexeyformicrolab/posts
+  tag: 0.1.6
+
+configs:
+  DB: posts_db
+  DB_HOST: posts-postgres
+
+secrets:
+  DB_USER: "cG9zdGdyZXM="
+  DB_PASSWORD: "cG9zdHNwYXNzd29yZA=="
+
+service:
+  ports:
+    - name: http
+      port: 80
+      containerPort: 80
+
+ingress:
+  path: /api/posts
+  port: 80

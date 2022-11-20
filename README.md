@@ -22,6 +22,7 @@
 - `GET /api/posts` --- get list of all posts
 - `GET /api/posts/:id` --- get user by id
 - `POST /api/posts` --- add new post
+- `PUT /api/posts` --- edit existing post
 - `DELETE /api/posts/:id` --- delete post by id
 
 **Comments** microservice ([DockerHub](https://hub.docker.com/r/hxnchar/comments)):
@@ -31,6 +32,6 @@
 - `DELETE /api/posts/:id/comments/:id` --- delete comment
 
 
-**Client** microservice ([DockerHub](https://hub.docker.com/r/hxnchar/client))
+**Client** microservice ([DockerHub](https://hub.docker.com/r/hxnchar/temp-client))
 
 # Welcome to Best Blog You`ve Ever Seen🤡
