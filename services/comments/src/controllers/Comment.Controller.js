@@ -8,7 +8,7 @@ const CommentController = {
             const { post_id } = req.params;
             const comments = await Comment.findAll({where: { post_id }});
             const authorIds = new Set(comments.map(x => x.author_id));
-            const authors = await Promise.all([...authorIds].map(id => fetch(`http://users-service/api/users/${id}`)));
+            const authors = await Promise.all([...authorIds].map(id => fetch(`http://${process.env.USERS_HOST}/api/users/${id}`)));
             comments.forEach(comment => {
                 const author = authors.find(x => x.ok && x.body.author_id === comment.author_id);
                 if(author){
@@ -29,7 +29,7 @@ const CommentController = {
             if (!result) {
                 throw createError(404, 'This comment doesn`t exist');
             }
-            const author = await fetch(`http://users-service/api/users/${result.author_id}`);
+            const author = await fetch(`http://${process.env.USERS_HOST}/api/users/${result.author_id}`);
             if (author.ok) {
                 result.author_username = author.body.username;
                 result.author_tag = author.body.tag;
