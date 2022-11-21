@@ -1,5 +1,6 @@
 import Comment from '../models/Comment.Model.js';
 import createError from 'http-errors';
+import fetch from 'node-fetch';
 
 const CommentController = {
     async getAllComments(req, res, next) {
@@ -7,7 +8,7 @@ const CommentController = {
             const { post_id } = req.params;
             const comments = await Comment.findAll({where: { post_id }});
             const authorIds = new Set(comments.map(x => x.author_id));
-            const authors = await new Promise.all([...authorIds].map(id => fetch(`http://users-service/api/users/${id}`)));
+            const authors = await Promise.all([...authorIds].map(id => fetch(`http://users-service/api/users/${id}`)));
             comments.forEach(comment => {
                 const author = authors.find(x => x.ok && x.body.author_id === comment.author_id);
                 if(author){
