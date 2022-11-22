@@ -1,6 +1,6 @@
 image:
   name: hxnchar/comments
-  tag: 0.2.3
+  tag: 0.2.9
 
 configs:
   DB: posts_db

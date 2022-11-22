@@ -8,15 +8,24 @@ const CommentController = {
             const { post_id } = req.params;
             const comments = await Comment.findAll({where: { post_id }});
             const authorIds = new Set(comments.map(x => x.author_id));
-            const authors = await Promise.all([...authorIds].map(id => fetch(`http://${process.env.USERS_HOST}/api/users/${id}`)));
-            comments.forEach(comment => {
-                const author = authors.find(x => x.ok && x.body.author_id === comment.author_id);
-                if(author){
-                    comment.author_username = author.body.username;
-                    comment.author_tag = author.body.author_tag;
+            const authors = await Promise.all([...authorIds].map(async id => (await fetch(`http://${process.env.USERS_HOST}/api/users/${id}`)).json()));
+            const result = comments.map(comment => {
+                const author = authors.find(x => x.id === comment.author_id);
+                const newComment = {
+                    id: comment.id,
+                    body: comment.body,
+                    post_id: comment.post_id,
+                    author: {
+                        id: comment.author_id
+                    }
                 }
+                if(author){
+                    newComment.author.username = author.username;
+                    newComment.author.tag = author.tag;
+                }
+                return newComment;
             });
-            res.send({ comments });
+            res.send({ comments: result });
         } catch (err) {
             next(err);
         }
@@ -29,12 +38,17 @@ const CommentController = {
             if (!result) {
                 throw createError(404, 'This comment doesn`t exist');
             }
-            const author = await fetch(`http://${process.env.USERS_HOST}/api/users/${result.author_id}`);
-            if (author.ok) {
-                result.author_username = author.body.username;
-                result.author_tag = author.body.tag;
-            }
-            res.send(result);
+            const author = await (await fetch(`http://${process.env.USERS_HOST}/api/users/${result.author_id}`)).json();
+            res.send(JSON.stringify({
+                id: comment_id,
+                body: result.body,
+                post_id: result.post_id,
+                author: {
+                    id: result.author_id,
+                    username: author.username,
+                    tag: author.tag
+                }
+            }));
         } catch (err) {
             next(err);
         }
