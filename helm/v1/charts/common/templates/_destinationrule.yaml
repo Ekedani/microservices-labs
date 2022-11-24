@@ -18,3 +18,5 @@ spec:
       interval: 10s
       baseEjectionTime: 30s
       maxEjectionPercent: 80
+{{- end -}}
+{{- end -}}

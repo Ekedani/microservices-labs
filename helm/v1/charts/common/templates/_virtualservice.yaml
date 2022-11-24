@@ -22,3 +22,5 @@ spec:
         attempts: 3
         retryOn: 5xx
         perTryTimeout: 5s
+{{- end -}}
+{{- end -}}
