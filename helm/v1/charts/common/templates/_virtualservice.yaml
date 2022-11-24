@@ -1,3 +1,11 @@
+{{- define "common.virtualservice" -}}
+
+{{- $common := dict "Values" .Values.common -}}
+{{- $noCommon := omit .Values "common" -}}
+{{- $overrides := dict "Values" $noCommon -}}
+{{- $noValues := omit . "Values" -}}
+{{- with merge $noValues $overrides $common -}}
+---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
