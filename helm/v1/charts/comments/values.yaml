@@ -1,10 +1,11 @@
 image:
   name: hxnchar/comments
-  tag: 0.1.2
+  tag: 0.2.9
 
 configs:
   DB: posts_db
   DB_HOST: posts-postgres
+  USERS_HOST: local-users
 
 secrets:
   DB_USER: "cG9zdGdyZXM="

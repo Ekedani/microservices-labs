@@ -1,0 +1,26 @@
+{{- define "common.virtualservice" -}}
+
+{{- $common := dict "Values" .Values.common -}}
+{{- $noCommon := omit .Values "common" -}}
+{{- $overrides := dict "Values" $noCommon -}}
+{{- $noValues := omit . "Values" -}}
+{{- with merge $noValues $overrides $common -}}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "common.fullname" . }}-virtual
+spec:
+  hosts:
+    - {{ include "common.fullname" . }}
+  http:
+    - route:
+        - destination:
+            host: {{ include "common.fullname" . }}
+      timeout: 5s
+      retries:
+        attempts: 3
+        retryOn: 5xx
+        perTryTimeout: 5s
+{{- end -}}
+{{- end -}}

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PostService.Data;
 using PostService.Models;
+using System.Text.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PostService.Controllers
 {
@@ -112,6 +114,40 @@ namespace PostService.Controllers
             //    return Ok();
             //}
             return NotFound();
+        }
+
+        [Route(""), HttpGet("{id}", Name = "GetUserAndPost")]
+        public async Task<IActionResult> GetUserAndPost(int id) //post id
+        {
+            var post = _context.posts.SingleOrDefault(post => post.Id == id);
+            string userId = post.Author_Id;
+
+            string path = $"/api/users/{userId}";
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(path).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonData = await response.Content.ReadAsStringAsync();
+
+                var jsonPost = JsonSerializer.Serialize(post);
+
+                dynamic user = JObject.Parse(jsonData);
+                JObject combined = new JObject
+                {
+                    { "Id", post.Id },
+                    { "Header", post.Header },
+                    { "Body", post.Body },
+                    { "Author_Id", post.Author_Id },
+                    { "Username", user.username },
+                    { "Tag", user.tag }
+                };
+
+                return Ok(combined);
+            }
+
+
+            return BadRequest();
         }
     }
 }
