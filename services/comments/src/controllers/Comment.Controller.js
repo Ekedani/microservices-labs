@@ -70,7 +70,7 @@ const CommentController = {
             });
             const result = await comment.save();
             kafkaProducer.send({
-                topic: 'post.comment',
+                topic: 'posts.comments',
                 messages: JSON.stringify({event: 'add', comment: result})
             });
             res.send(result);

@@ -21,4 +21,6 @@ kafka:
   provisioning:
     enabled: true
     topics:
-     - name: post.comment
+      name: 
+      - posts.comments
+      - users
