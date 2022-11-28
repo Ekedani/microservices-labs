@@ -1,6 +1,10 @@
-import Comment from '../models/Comment.Model.js';
 import createError from 'http-errors';
+import {KafkaClient, HighLevelProducer} from 'kafka-node';
 import fetch from 'node-fetch';
+import Comment from '../models/Comment.Model.js';
+
+const kafkaClient = new KafkaClient();
+const kafkaProducer = new HighLevelProducer(kafkaClient);
 
 const CommentController = {
     async getAllComments(req, res, next) {
