@@ -17,9 +17,8 @@ const emailTransporter = createTransport({
     }
 });
 
-const newCommentConsumer = new EmailConsumer(kafkaClient, emailTransporter, {
-    topic: 'post.comment',
-    partition: 0
+const сommentConsumer = new EmailConsumer(kafkaClient, emailTransporter, {
+    topic: 'post.comment'
 });
 
-newCommentConsumer.addEventHandler('add', newCommentHandler);
+сommentConsumer.addEventHandler('add', newCommentHandler);

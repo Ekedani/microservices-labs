@@ -1,5 +1,4 @@
-export default async (message) => {
-    const comment = JSON.parse(message.messages);
+export default async (comment) => {
     const postResponse = await fetch(`http://${process.env.POSTS_HOST}/api/${comment.post_id}`);
     if (!postResponse.ok) {
         throw new Error(`Request to posts finished with status ${userResponse.status}`);
