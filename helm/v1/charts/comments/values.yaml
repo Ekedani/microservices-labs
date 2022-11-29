@@ -6,6 +6,7 @@ configs:
   DB: posts_db
   DB_HOST: posts-postgres
   USERS_HOST: local-users
+  KAFKA_HOST: kafka
 
 secrets:
   DB_USER: "cG9zdGdyZXM="
