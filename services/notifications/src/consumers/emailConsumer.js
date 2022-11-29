@@ -8,12 +8,12 @@ export default class EmailConsumer {
 
         this.kafkaConsumer.on('message', async (message) => {
             try {
-                message = JSON.parse(message);
-                const handler = this.eventHandlers.find(handler => handler.event === message.messages.event);
+                console.log(message);
+                const handler = this.eventHandlers.find(handler => handler.event === message.value.event);
                 if(!handler) {
                     throw new Error('Unimplemented error');
                 }
-                const data = await handler(message.messages.comment);
+                const data = await handler(message.value.comment);
                 const info = await this.transport.sendMail(data);
                 console.log('Message sent: ', info.messageId);
             } catch (err) {
