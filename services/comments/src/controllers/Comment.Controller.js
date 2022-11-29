@@ -69,10 +69,10 @@ const CommentController = {
                 post_id
             });
             const result = await comment.save();
-            kafkaProducer.send({
+            kafkaProducer.send([{
                 topic: 'posts.comments',
                 messages: JSON.stringify({event: 'add', comment: result})
-            });
+            }], (err, data) => console.log(data));
             res.send(result);
         } catch (err) {
             next(err);

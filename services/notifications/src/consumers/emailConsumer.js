@@ -4,7 +4,7 @@ export default class EmailConsumer {
     constructor(kafkaClient, transport, options) {
         this.kafkaConsumer = new Consumer(kafkaClient, [{topic: options.topic}]);
         this.transport = transport;
-        thid.eventHandlers = [];
+        this.eventHandlers = [];
 
         this.kafkaConsumer.on('message', async (message) => {
             try {
