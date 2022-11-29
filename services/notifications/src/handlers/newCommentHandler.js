@@ -1,10 +1,12 @@
+import fetch from 'node-fetch';
+
 export default async (comment) => {
-    const postResponse = await fetch(`http://${process.env.POSTS_HOST}/api/${comment.post_id}`);
+    const postResponse = await fetch(`http://${process.env.POSTS_HOST}/api/posts/${comment.post_id}`);
     if (!postResponse.ok) {
-        throw new Error(`Request to posts finished with status ${userResponse.status}`);
+        throw new Error(`Request to posts finished with status ${postResponse.status}`);
     }
     const post = await postResponse.json();
-    const userResponse = await fetch(`http://${process.env.USERS_HOST}/api/${post.author_id}`);
+    const userResponse = await fetch(`http://${process.env.USERS_HOST}/api/users/${post.author_Id}`);
     if (!userResponse.ok) {
         throw new Error(`Request to users finished with status ${userResponse.status}`);
     }

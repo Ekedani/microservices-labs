@@ -1,6 +1,6 @@
 image:
   name: ekedani/notifications
-  tag: 0.1.3
+  tag: 0.1.10
 
 configs:
   KAFKA_HOST: kafka
