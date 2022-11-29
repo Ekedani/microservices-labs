@@ -21,6 +21,7 @@ kafka:
   provisioning:
     enabled: true
     topics:
-      name: 
-      - posts.comments
-      - users
+      - name: posts.comments
+      - name: users
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
