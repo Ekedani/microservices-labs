@@ -10,7 +10,7 @@ namespace PostService.Consumer
     {
         private readonly AppDBContext dbContext;
 
-        private readonly string topic = "posts";
+        private readonly string topic = "users";
         private readonly string groupId = "blog";
         private readonly string bootstrapServers = $"{Environment.GetEnvironmentVariable("KAFKA_HOST")}:9092";
 
@@ -43,6 +43,7 @@ namespace PostService.Consumer
                             var consumer = consumerBuilder.Consume
                                 (cancelToken.Token);
 
+                            Console.WriteLine(consumer.Message);
                             var value = JObject.Parse(consumer.Message.Value);
 
                             var eventType = value["event"]?.ToString();
