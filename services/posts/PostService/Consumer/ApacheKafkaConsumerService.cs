@@ -1,6 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Confluent.Kafka;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
 using PostService.Data;
 
@@ -10,8 +13,8 @@ namespace PostService.Consumer
     {
         private readonly AppDBContext dbContext;
 
-        private readonly string topic = "users";
-        private readonly string groupId = "blog";
+        private const string Topic = "users";
+        private const string GroupId = "blog";
         private readonly string bootstrapServers = $"{Environment.GetEnvironmentVariable("KAFKA_HOST")}:9092";
 
         public ApacheKafkaConsumerService(AppDBContext context)
@@ -23,7 +26,7 @@ namespace PostService.Consumer
         {
             var config = new ConsumerConfig
             {
-                GroupId = groupId,
+                GroupId = GroupId,
                 BootstrapServers = bootstrapServers,
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
@@ -33,7 +36,7 @@ namespace PostService.Consumer
                 using (var consumerBuilder = new ConsumerBuilder
                            <Ignore, string>(config).Build())
                 {
-                    consumerBuilder.Subscribe(topic);
+                    consumerBuilder.Subscribe(Topic);
                     var cancelToken = new CancellationTokenSource();
 
                     try
@@ -45,7 +48,8 @@ namespace PostService.Consumer
 
                             Console.WriteLine(consumer.Message);
                             var value = JObject.Parse(consumer.Message.Value);
-
+                            
+                            Console.WriteLine(value);
                             var eventType = value["event"]?.ToString();
 
                             if (eventType == "delete")
