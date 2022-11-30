@@ -2,6 +2,8 @@ import User from '../models/User.Model.js';
 import createError from 'http-errors';
 import {ValidationError} from "sequelize";
 
+const kafkaClient = new KafkaClient({kafkaHost: `${process.env.KAFKA_HOST}:9092`});
+const kafkaProducer = new HighLevelProducer(kafkaClient);
 const NOT_FOUND_MSG = 'User not found';
 
 const UserController = {
@@ -53,6 +55,10 @@ const UserController = {
             if (!isDeleted) {
                 throw createError(404, NOT_FOUND_MSG);
             }
+            kafkaProducer.send([{
+                topic: 'users',
+                messages: JSON.stringify({event: 'delete', user_id: id})
+            }], (err, data) => console.log(data));
             res.status(204).send();
         } catch (err) {
             next(err);

@@ -13,6 +13,7 @@ migrations:
 configs:
   DB: users_db
   DB_HOST: users-postgres
+  KAFKA_HOST: kafka
 
 secrets:
   DB_USER: "cG9zdGdyZXM="
