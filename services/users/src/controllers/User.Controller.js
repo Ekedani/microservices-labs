@@ -1,6 +1,7 @@
 import User from '../models/User.Model.js';
 import createError from 'http-errors';
 import {ValidationError} from "sequelize";
+import {KafkaClient, HighLevelProducer} from 'kafka-node';
 
 const kafkaClient = new KafkaClient({kafkaHost: `${process.env.KAFKA_HOST}:9092`});
 const kafkaProducer = new HighLevelProducer(kafkaClient);
