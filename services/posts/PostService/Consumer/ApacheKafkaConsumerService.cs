@@ -8,16 +8,17 @@ namespace PostService.Consumer
 {
     public class ApacheKafkaConsumerService : IHostedService
     {
-        private readonly AppDBContext dbContext;
+        //private readonly AppDBContext dbContext;
+        private readonly IServiceScopeFactory scopeFactory;
 
         private readonly string topic = "posts";
         private readonly string groupId = "blog";
         private readonly string bootstrapServers = $"{Environment.GetEnvironmentVariable("KAFKA_HOST")}:9092";
 
-        public ApacheKafkaConsumerService(AppDBContext context)
-        {
-            dbContext = context;
-        }
+        //public ApacheKafkaConsumerService(AppDBContext context)
+        //{
+        //    dbContext = context;
+        //}
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -50,10 +51,13 @@ namespace PostService.Consumer
                             if (eventType == "delete")
                             {
                                 var author_id = value["user_id"]?.ToString();
-                                
-                                var postsToRemove = dbContext.posts.Where(x => x.Author_Id == author_id).ToList();
+                                using (var scope = scopeFactory.CreateScope()) // this will use `IServiceScopeFactory` internally
+                                {
+                                    var context = scope.ServiceProvider.GetService<AppDBContext>();
+                                    var postsToRemove = context.posts.Where(x => x.Author_Id == author_id).ToList();
+                                    context.posts.RemoveRange(postsToRemove);
+                                }
 
-                                dbContext.posts.RemoveRange(postsToRemove);
                             }
                         }
                     }

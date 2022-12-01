@@ -9,11 +9,7 @@ using PostService.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddSingleton
-    <IHostedService, ApacheKafkaConsumerService>();
 
-
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 string connectionStr =
     $"Server={Environment.GetEnvironmentVariable("DB_HOST")};Port=5432;Database={Environment.GetEnvironmentVariable("DB")};UserId={Environment.GetEnvironmentVariable("DB_USER")};Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
@@ -22,6 +18,11 @@ string connectionStr =
 //    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<AppDBContext>(opt =>
     opt.UseNpgsql(connectionStr).UseSnakeCaseNamingConvention());
+
+
+builder.Services.AddSingleton
+    <IHostedService, ApacheKafkaConsumerService>();
+builder.Services.AddControllers();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
