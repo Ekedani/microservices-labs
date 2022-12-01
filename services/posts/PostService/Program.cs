@@ -19,8 +19,8 @@ builder.Services.AddDbContext<AppDBContext>(opt =>
     opt.UseNpgsql(connectionStr).UseSnakeCaseNamingConvention());
 
 builder.Services.AddSingleton<IHostedService, ApacheKafkaConsumerService>();
-
 builder.Services.AddControllers();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
