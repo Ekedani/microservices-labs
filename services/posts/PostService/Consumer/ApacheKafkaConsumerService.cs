@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
 using PostService.Data;
@@ -14,8 +15,8 @@ namespace PostService.Consumer
         //private readonly AppDBContext dbContext;
         private readonly IServiceScopeFactory scopeFactory;
 
-        private const string Topic = "users";
-        private const string GroupId = "blog";
+        private readonly string Topic = "users";
+        //private readonly string GroupId = "test_group";
         private readonly string bootstrapServers = $"{Environment.GetEnvironmentVariable("KAFKA_HOST")}:9092";
 
         //public ApacheKafkaConsumerService(AppDBContext context)
@@ -27,7 +28,7 @@ namespace PostService.Consumer
         {
             var config = new ConsumerConfig
             {
-                GroupId = GroupId,
+                //GroupId = GroupId,
                 BootstrapServers = bootstrapServers,
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
