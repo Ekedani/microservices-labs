@@ -46,52 +46,54 @@ namespace PostService.Consumer
                     };
 
                     var cb = new ConsumerBuilder<string, string>(consumerConfig);
-                    logger.LogInformation($"Consumer had been built");
+                    logger.LogInformation($"Consumer builder had been built");
 
                     using (var consumer = cb.Build())
                     {
                         consumer.Subscribe(Topic);
                         logger.LogInformation($"Consumer subscribed on topic: {Topic}");
-
-                        var cr = consumer.Consume(cancellationToken);
-
-                        Console.WriteLine(cr.Message);
-                        logger.LogInformation($"Consumer Got Message: {cr.Message}");
-                        var value = JObject.Parse(cr.Message.Value);
-
-                        Console.WriteLine(value);
-                        var eventType = value["event"]?.ToString();
-                        logger.LogInformation($"Event in Message: {eventType}");
-
-                        if (eventType == "delete")
+                        while (true)
                         {
-                            var author_id = value["user_id"]?.ToString();
-                            logger.LogInformation($"Author_id in Message: {author_id}");
-                            using (var scope = scopeFactory.CreateScope())
+                            var cr = consumer.Consume(cancellationToken);
+
+                            Console.WriteLine(cr.Message);
+                            logger.LogInformation($"Consumer Got Message: {cr.Message}");
+                            var value = JObject.Parse(cr.Message.Value);
+
+                            Console.WriteLine(value);
+                            var eventType = value["event"]?.ToString();
+                            logger.LogInformation($"Event in Message: {eventType}");
+
+                            if (eventType == "delete")
                             {
-                                var context = scope.ServiceProvider.GetService<AppDBContext>();
-                                if (context == null)
+                                var author_id = value["user_id"]?.ToString();
+                                logger.LogInformation($"Author_id in Message: {author_id}");
+                                using (var scope = scopeFactory.CreateScope())
                                 {
-                                    logger.LogInformation($"Context is null");
-                                }
-                                else
-                                {
-
-                                    var postsToRemove = context.posts.Where(x => x.Author_Id == author_id)
-                                        .ToList();
-                                    foreach (var item in postsToRemove)
+                                    var context = scope.ServiceProvider.GetService<AppDBContext>();
+                                    if (context == null)
                                     {
-                                        context.posts.Remove(item);
+                                        logger.LogInformation($"Context is null");
                                     }
+                                    else
+                                    {
 
-                                    logger.LogInformation($"Posts has been removed");
+                                        var postsToRemove = context.posts.Where(x => x.Author_Id == author_id)
+                                            .ToList();
+                                        foreach (var item in postsToRemove)
+                                        {
+                                            context.posts.Remove(item);
+                                        }
+
+                                        logger.LogInformation($"Posts has been removed");
+                                    }
                                 }
-                            }
 
-                        }
-                        else
-                        {
-                            logger.LogInformation($"Event in Message is not delete");
+                            }
+                            else
+                            {
+                                logger.LogInformation($"Event in Message is not delete");
+                            }
                         }
                     }
                 }
