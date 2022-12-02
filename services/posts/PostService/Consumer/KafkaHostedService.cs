@@ -54,22 +54,42 @@ namespace PostService.Consumer
                         var cr = consumer.Consume(cancellationToken);
 
                         Console.WriteLine(cr.Message);
+                        logger.LogInformation($"Consumer Got Message: {cr.Message}");
                         var value = JObject.Parse(cr.Message.Value);
 
                         Console.WriteLine(value);
                         var eventType = value["event"]?.ToString();
+                        logger.LogInformation($"Event in Message: {eventType}");
 
                         if (eventType == "delete")
                         {
                             var author_id = value["user_id"]?.ToString();
+                            logger.LogInformation($"Author_id in Message: {author_id}");
                             using (var scope = scopeFactory.CreateScope())
                             {
                                 var context = scope.ServiceProvider.GetService<AppDBContext>();
-                                var postsToRemove = context.posts.Where(x => x.Author_Id == author_id)
-                                    .ToList();
-                                context.posts.RemoveRange(postsToRemove);
+                                if (context == null)
+                                {
+                                    logger.LogInformation($"Context is null");
+                                }
+                                else
+                                {
+
+                                    var postsToRemove = context.posts.Where(x => x.Author_Id == author_id)
+                                        .ToList();
+                                    foreach (var item in postsToRemove)
+                                    {
+                                        context.posts.Remove(item);
+                                    }
+
+                                    logger.LogInformation($"Posts has been removed");
+                                }
                             }
 
+                        }
+                        else
+                        {
+                            logger.LogInformation($"Event in Message is not delete");
                         }
                     }
                 }
