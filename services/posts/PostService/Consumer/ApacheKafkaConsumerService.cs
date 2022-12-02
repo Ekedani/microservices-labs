@@ -10,92 +10,116 @@ using PostService.Data;
 
 namespace PostService.Consumer
 {
-    public class ApacheKafkaConsumerService : IHostedService
+    public abstract class ApacheKafkaConsumerService : IHostedService, IDisposable
     {
         //private readonly AppDBContext dbContext;
-        private readonly IServiceScopeFactory scopeFactory;
-
-        private readonly string Topic = "users";
-        //private readonly string groupId = "test";
-        private readonly string bootstrapServers = $"{Environment.GetEnvironmentVariable("KAFKA_HOST")}:9092";
+        //private readonly IServiceScopeFactory scopeFactory;
 
         //public ApacheKafkaConsumerService(AppDBContext context)
         //{
         //    dbContext = context;
         //}
+        private Task executingTask;
+        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        protected abstract Task ExecuteAsync(CancellationToken stoppingToken);
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public virtual Task StartAsync(CancellationToken cancellationToken)
         {
-            await Task.Factory.StartNew(
-                () =>
-                {
-                    var config = new ConsumerConfig
-                    {
-                        BootstrapServers = bootstrapServers,
-                        AutoOffsetReset = AutoOffsetReset.Earliest,
-                        GroupId = "test"
-                    };
-                    try
-                    {
-                        using (var consumerBuilder = new ConsumerBuilder
-                                   <Ignore, string>(config).Build())
-                        {
-                            consumerBuilder.Subscribe(Topic);
-                            Console.WriteLine("Subscribed to the Topic");
-                            var cancelToken = new CancellationTokenSource();
+            executingTask = ExecuteAsync(cancellationTokenSource.Token);
 
-                            try
-                            {
-                                while (true)
-                                {
-                                    var consumer = consumerBuilder.Consume(cancelToken.Token);
+            if (executingTask.IsCompleted)
+            {
+                return executingTask;
+            }
 
-                                    Console.WriteLine(consumer.Message);
-                                    var value = JObject.Parse(consumer.Message.Value);
+            return Task.CompletedTask;
+            //await Task.Factory.StartNew(
+            //    () =>
+            //    {
+            //        var config = new ConsumerConfig
+            //        {
+            //            BootstrapServers = bootstrapServers,
+            //            AutoOffsetReset = AutoOffsetReset.Earliest,
+            //            GroupId = "test"
+            //        };
+            //        try
+            //        {
+            //            using (var consumerBuilder = new ConsumerBuilder
+            //                       <Ignore, string>(config).Build())
+            //            {
+            //                consumerBuilder.Subscribe(Topic);
+            //                Console.WriteLine("Subscribed to the Topic");
+            //                var cancelToken = new CancellationTokenSource();
 
-                                    Console.WriteLine(value);
-                                    var eventType = value["event"]?.ToString();
+            //                try
+            //                {
+            //                    while (true)
+            //                    {
+            //                        var consumer = consumerBuilder.Consume(cancelToken.Token);
 
-                                    if (eventType == "delete")
-                                    {
-                                        var author_id = value["user_id"]?.ToString();
-                                        using (var scope =
-                                               scopeFactory
-                                                   .CreateScope()) // this will use `IServiceScopeFactory` internally
-                                        {
-                                            var context = scope.ServiceProvider.GetService<AppDBContext>();
-                                            var postsToRemove = context.posts.Where(x => x.Author_Id == author_id)
-                                                .ToList();
-                                            context.posts.RemoveRange(postsToRemove);
-                                        }
+            //                        Console.WriteLine(consumer.Message);
+            //                        var value = JObject.Parse(consumer.Message.Value);
 
-                                    }
-                                }
-                            }
-                            catch (OperationCanceledException)
-                            {
-                                Console.WriteLine("OperationCanceledException");
-                                consumerBuilder.Close();
-                            }
-                            finally
-                            {
-                                consumerBuilder.Close();
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Exception");
-                        System.Diagnostics.Debug.WriteLine(ex.Message);
-                    }
+            //                        Console.WriteLine(value);
+            //                        var eventType = value["event"]?.ToString();
 
-                    return Task.CompletedTask;
-                });
+            //                        if (eventType == "delete")
+            //                        {
+            //                            var author_id = value["user_id"]?.ToString();
+            //                            using (var scope =
+            //                                   scopeFactory
+            //                                       .CreateScope()) // this will use `IServiceScopeFactory` internally
+            //                            {
+            //                                var context = scope.ServiceProvider.GetService<AppDBContext>();
+            //                                var postsToRemove = context.posts.Where(x => x.Author_Id == author_id)
+            //                                    .ToList();
+            //                                context.posts.RemoveRange(postsToRemove);
+            //                            }
+
+            //                        }
+            //                    }
+            //                }
+            //                catch (OperationCanceledException)
+            //                {
+            //                    Console.WriteLine("OperationCanceledException");
+            //                    consumerBuilder.Close();
+            //                }
+            //                finally
+            //                {
+            //                    consumerBuilder.Close();
+            //                }
+            //            }
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            Console.WriteLine("Exception");
+            //            System.Diagnostics.Debug.WriteLine(ex.Message);
+            //        }
+
+            //        return Task.CompletedTask;
+            //    });
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public virtual async Task StopAsync(CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
+            if (executingTask == null)
+            {
+                return;
+            }
+
+            try
+            {
+                cancellationTokenSource.Cancel();
+            }
+            finally
+            {
+                await Task.WhenAny(executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
+            }
+        }
+
+        public void Dispose()
+        {
+            cancellationTokenSource.Cancel();
         }
     }
 }

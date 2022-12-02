@@ -18,7 +18,8 @@ string connectionStr =
 builder.Services.AddDbContext<AppDBContext>(opt =>
     opt.UseNpgsql(connectionStr).UseSnakeCaseNamingConvention());
 
-builder.Services.AddSingleton<IHostedService, ApacheKafkaConsumerService>();
+//builder.Services.AddSingleton<IHostedService, ApacheKafkaConsumerService>();
+builder.Services.AddHostedService<KafkaHostedService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
