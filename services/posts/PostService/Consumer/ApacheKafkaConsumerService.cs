@@ -29,67 +29,66 @@ namespace PostService.Consumer
             await Task.Factory.StartNew(
                 () =>
                 {
-                    while (!cancellationToken.IsCancellationRequested)
+                    var config = new ConsumerConfig
                     {
-                        var config = new ConsumerConfig
+                        BootstrapServers = bootstrapServers,
+                        AutoOffsetReset = AutoOffsetReset.Earliest,
+                        GroupId = "test"
+                    };
+                    try
+                    {
+                        using (var consumerBuilder = new ConsumerBuilder
+                                   <Ignore, string>(config).Build())
                         {
-                            BootstrapServers = bootstrapServers,
-                            AutoOffsetReset = AutoOffsetReset.Earliest,
-                            GroupId = "test"
-                        };
-                        try
-                        {
-                            using (var consumerBuilder = new ConsumerBuilder
-                                       <Ignore, string>(config).Build())
+                            consumerBuilder.Subscribe(Topic);
+                            Console.WriteLine("Subscribed to the Topic");
+                            var cancelToken = new CancellationTokenSource();
+
+                            try
                             {
-                                consumerBuilder.Subscribe(Topic);
-                                var cancelToken = new CancellationTokenSource();
-
-                                try
+                                while (true)
                                 {
-                                    while (true)
+                                    var consumer = consumerBuilder.Consume(cancelToken.Token);
+
+                                    Console.WriteLine(consumer.Message);
+                                    var value = JObject.Parse(consumer.Message.Value);
+
+                                    Console.WriteLine(value);
+                                    var eventType = value["event"]?.ToString();
+
+                                    if (eventType == "delete")
                                     {
-                                        var consumer = consumerBuilder.Consume(cancelToken.Token);
-
-                                        Console.WriteLine(consumer.Message);
-                                        var value = JObject.Parse(consumer.Message.Value);
-
-                                        Console.WriteLine(value);
-                                        var eventType = value["event"]?.ToString();
-
-                                        if (eventType == "delete")
+                                        var author_id = value["user_id"]?.ToString();
+                                        using (var scope =
+                                               scopeFactory
+                                                   .CreateScope()) // this will use `IServiceScopeFactory` internally
                                         {
-                                            var author_id = value["user_id"]?.ToString();
-                                            using (var scope =
-                                                   scopeFactory
-                                                       .CreateScope()) // this will use `IServiceScopeFactory` internally
-                                            {
-                                                var context = scope.ServiceProvider.GetService<AppDBContext>();
-                                                var postsToRemove = context.posts.Where(x => x.Author_Id == author_id)
-                                                    .ToList();
-                                                context.posts.RemoveRange(postsToRemove);
-                                            }
-
+                                            var context = scope.ServiceProvider.GetService<AppDBContext>();
+                                            var postsToRemove = context.posts.Where(x => x.Author_Id == author_id)
+                                                .ToList();
+                                            context.posts.RemoveRange(postsToRemove);
                                         }
+
                                     }
                                 }
-                                catch (OperationCanceledException)
-                                {
-                                    consumerBuilder.Close();
-                                }
-                                finally
-                                {
-                                    consumerBuilder.Close();
-                                }
+                            }
+                            catch (OperationCanceledException)
+                            {
+                                Console.WriteLine("OperationCanceledException");
+                                consumerBuilder.Close();
+                            }
+                            finally
+                            {
+                                consumerBuilder.Close();
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine(ex.Message);
-                        }
-
-                        return Task.CompletedTask;
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Exception");
+                        System.Diagnostics.Debug.WriteLine(ex.Message);
+                    }
+
                     return Task.CompletedTask;
                 });
         }
