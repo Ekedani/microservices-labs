@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PostService.Consumer;
 using PostService.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
 builder.Services.AddEndpointsApiExplorer();
 string connectionStr =
     $"Server={Environment.GetEnvironmentVariable("DB_HOST")};Port=5432;Database={Environment.GetEnvironmentVariable("DB")};UserId={Environment.GetEnvironmentVariable("DB_USER")};Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
@@ -16,6 +17,11 @@ string connectionStr =
 //    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<AppDBContext>(opt =>
     opt.UseNpgsql(connectionStr).UseSnakeCaseNamingConvention());
+
+//builder.Services.AddSingleton<IHostedService, ApacheKafkaConsumerService>();
+builder.Services.AddHostedService<KafkaHostedService>();
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

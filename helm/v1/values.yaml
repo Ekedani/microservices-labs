@@ -14,3 +14,14 @@ posts-postgres:
   persistence:
     size: 1Gi
     mountPath: /var/lib/postgresql/data
+kafka:
+  fullnameOverride: kafka   
+  numPartitions: 3
+  autoCreateTopicsEnable: false
+  provisioning:
+    enabled: true
+    topics:
+      - name: posts.comments
+      - name: users
+    podAnnotations:
+      sidecar.istio.io/inject: "false"

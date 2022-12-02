@@ -13,3 +13,6 @@ dependencies:
     version: 10.16.2
     repository: https://charts.bitnami.com/bitnami
     alias: posts-postgres
+  - name: kafka
+    version: 18.3.1
+    repository: https://charts.bitnami.com/bitnami

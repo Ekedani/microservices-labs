@@ -1,6 +1,10 @@
-import Comment from '../models/Comment.Model.js';
 import createError from 'http-errors';
 import fetch from 'node-fetch';
+import {KafkaClient, HighLevelProducer} from 'kafka-node';
+import Comment from '../models/Comment.Model.js';
+
+const kafkaClient = new KafkaClient({kafkaHost: `${process.env.KAFKA_HOST}:9092`});
+const kafkaProducer = new HighLevelProducer(kafkaClient);
 
 const CommentController = {
     async getAllComments(req, res, next) {
@@ -65,6 +69,10 @@ const CommentController = {
                 post_id
             });
             const result = await comment.save();
+            kafkaProducer.send([{
+                topic: 'posts.comments',
+                messages: JSON.stringify({event: 'add', comment: result})
+            }], (err, data) => console.log(data));
             res.send(result);
         } catch (err) {
             next(err);
