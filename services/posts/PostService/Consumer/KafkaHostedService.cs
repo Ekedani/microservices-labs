@@ -46,10 +46,12 @@ namespace PostService.Consumer
                     };
 
                     var cb = new ConsumerBuilder<string, string>(consumerConfig);
+                    logger.LogInformation($"Consumer had been built");
 
                     using (var consumer = cb.Build())
                     {
                         consumer.Subscribe(Topic);
+                        logger.LogInformation($"Consumer subscribed on topic: {Topic}");
 
                         var cr = consumer.Consume(cancellationToken);
 
