@@ -1,6 +1,6 @@
 image:
   name: alexeyformicrolab/posts
-  tag: 0.3.2
+  tag: 0.3.10
 
 configs:
   DB: posts_db

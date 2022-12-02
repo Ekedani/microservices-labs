@@ -1,5 +1,11 @@
-﻿using Confluent.Kafka;
-using Newtonsoft.Json;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Confluent.Kafka;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using PostService.Data;
 
@@ -56,7 +62,6 @@ namespace PostService.Consumer
                         {
                             var cr = consumer.Consume(cancellationToken);
 
-                            Console.WriteLine(cr.Message);
                             logger.LogInformation($"Consumer Got Message: {cr.Message}");
                             var value = JObject.Parse(cr.Message.Value);
 
@@ -84,6 +89,7 @@ namespace PostService.Consumer
                                         {
                                             context.posts.Remove(item);
                                         }
+                                        context.SaveChanges();
 
                                         logger.LogInformation($"Posts has been removed");
                                     }
